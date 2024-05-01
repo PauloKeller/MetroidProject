@@ -52,6 +52,4 @@ public class PlayerUseCase : IPlayerUseCaseInterface
 
         return movementVector;
     }
-
-
 } 

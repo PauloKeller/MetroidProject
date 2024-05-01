@@ -6,13 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float dashForce = 10f;
+    [SerializeField] float dashForce = 5f;
 
     [Header("Projectiles")]
     [SerializeField] GameObject projectile; 
 
     private Rigidbody2D MyRigidbody2D => GetComponent<Rigidbody2D>();
-    private AnimatorController MyAnimatorController => GetComponent<AnimatorController>();
+
     private PlayerControls PlayerControls;
 
     private IPlayerUseCaseInterface playerUseCase;
