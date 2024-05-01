@@ -50,8 +50,11 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            GameObject prefab = Instantiate(projectile, gameObject.transform.position, Quaternion.identity);
-            prefab.GetComponent<ProjectileController>().BuldProjectile(facingDirection: playerUseCase.FacingDir);
+            if (playerUseCase.CraftBullet() is FlameBullet flameBullet)
+            {
+                GameObject prefab = Instantiate(projectile, gameObject.transform.position, Quaternion.identity);
+                prefab.GetComponent<ProjectileController>().BuldProjectile(facingDirection: playerUseCase.FacingDir, projectile: flameBullet);
+            }
         }
     } 
 
