@@ -108,6 +108,41 @@ jobs:
           name: build-WebGL
           path: build/WebGL
   
+  buildWindows:
+    needs: testRunner
+    name: Build for Windows 🖥️
+    runs-on: ubuntu-latest
+    strategy:
+        fail-fast: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+            path: .git/lfs
+            key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+            git lfs pull
+            git add .
+            git reset --hard
+
+      - name: Restore Library cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-build-StandaloneWindows64
+          restore-keys: |
+            Library-build-
+            Library-
+  
   deployPages:
     permissions: write-all
     needs: buildWebGL
@@ -123,7 +158,7 @@ jobs:
             path: build
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.6.0
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
             branch: gh-pages
             folder: build/WebGL
