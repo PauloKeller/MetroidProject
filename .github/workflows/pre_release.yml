@@ -1,4 +1,4 @@
-name: GameCI Template 🎮
+name: Pre Release 🎮
 
 on:
   push: 
@@ -9,7 +9,7 @@ on:
 jobs:
   buildAndTestForLinuxBasedPlatforms:
     permissions: write-all
-    name: Build for ${{ matrix.targetPlatform }}
+    name: Build for ${{ matrix.targetPlatform }} ⚙️
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -26,15 +26,29 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
       - uses: actions/cache@v4
         with:
-          path: ${{ matrix.projectPath }}/Library
-          key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+          path: /Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
-            Library-${{ matrix.projectPath }}-
+            Library-test-project-
             Library-
       - uses: game-ci/unity-test-runner@v4
         id: testRunner
@@ -43,7 +57,6 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
@@ -60,7 +73,6 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           allowDirtyBuild: true
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
@@ -71,7 +83,7 @@ jobs:
 
   buildForWindowsBasedPlatforms:
     permissions: write-all
-    name: Build for ${{ matrix.targetPlatform }}
+    name: Build for ${{ matrix.targetPlatform }} ⚙️
     runs-on: windows-2022
     strategy:
       fail-fast: false
@@ -89,15 +101,29 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
       - uses: actions/cache@v4
         with:
-          path: ${{ matrix.projectPath }}/Library
-          key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+          path: Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
-            Library-${{ matrix.projectPath }}-
+            Library-test-project-
             Library-
       - uses: game-ci/unity-builder@v4
         env:
@@ -106,7 +132,6 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           allowDirtyBuild: true
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
@@ -117,7 +142,7 @@ jobs:
   
   buildForMacOSBasedPlatforms:
     permissions: write-all
-    name: Build for ${{ matrix.targetPlatform }}
+    name: Build for ${{ matrix.targetPlatform }} ⚙️
     runs-on: macos-latest
     strategy:
       fail-fast: false
@@ -133,15 +158,28 @@ jobs:
           fetch-depth: 0
           lfs: true
 
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v4
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
       - uses: actions/cache@v4
         with:
-          path: ${{ matrix.projectPath }}/Library
-          key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+          path: Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
           restore-keys: |
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
-            Library-${{ matrix.projectPath }}-
+            Library-test-project-
             Library-
 
       - uses: game-ci/unity-builder@v4
@@ -151,7 +189,6 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           allowDirtyBuild: true
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
@@ -160,158 +197,3 @@ jobs:
         with:
           name: Build-${{ matrix.targetPlatform }}
           path: build
-
-# jobs:
-#   testRunner:
-#     permissions: write-all
-#     name: Test in ${{ matrix.testMode }} ✨
-#     runs-on: ubuntu-latest
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         testMode:
-#           - EditMode
-#           - PlayMode
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Create LFS file list
-#         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-#       - name: Restore LFS cache
-#         uses: actions/cache@v4
-#         id: lfs-cache
-#         with:
-#           path: .git/lfs
-#           key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-#       - name: Git LFS Pull
-#         run: |
-#           git lfs pull
-#           git add .
-#           git reset --hard
-
-#       - name: Restore Library cache
-#         uses: actions/cache@v4
-#         with:
-#           path: Library
-#           key: Library-test-project-${{ matrix.targetPlatform }}
-#           restore-keys: |
-#             Library-test-project-
-#             Library-
-
-#       - name: Run tests
-#         uses: game-ci/unity-test-runner@v4
-#         env:
-#             UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-#             UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-#             UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}    
-#         id: testRunner
-#         with:
-#           testMode: ${{ matrix.testMode }}
-#           checkName: ${{ matrix.testMode }} test results
-#           githubToken: ${{ secrets.GITHUB_TOKEN }}
-
-#       - uses: actions/upload-artifact@v4
-#         with:
-#           name: Test results (${{ matrix.testMode }})
-#           path: ${{ steps.testRunner.outputs.artifactsPath }}
-
-#   buildWebGL:
-#     permissions: write-all
-#     needs: testRunner
-#     name: Build for WebGL 🖥️
-#     runs-on: ubuntu-latest
-#     strategy:
-#       fail-fast: false
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Create LFS file list
-#         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-#       - name: Restore LFS cache
-#         uses: actions/cache@v4
-#         id: lfs-cache
-#         with:
-#           path: .git/lfs
-#           key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-#       - name: Git LFS Pull
-#         run: |
-#           git lfs pull
-#           git add .
-#           git reset --hard
-
-#       - name: Restore Library cache
-#         uses: actions/cache@v4
-#         with:
-#           path: Library
-#           key: Library-build-WebGL
-#           restore-keys: |
-#             Library-build-
-#             Library-
-
-#       - uses: game-ci/unity-builder@v4
-#         env:
-#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-#           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-#           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}    
-#         with:
-#           targetPlatform: WebGL
-
-#       - uses: actions/upload-artifact@v4
-#         with:
-#           name: build-WebGL
-#           path: build/WebGL
-  
-#   buildWindows:
-#     permissions: write-all
-#     needs: testRunner
-#     name: Build for Windows 🖥️
-#     runs-on: ubuntu-latest
-#     strategy:
-#         fail-fast: false
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Create LFS file list
-#         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-#       - name: Restore LFS cache
-#         uses: actions/cache@v4
-#         id: lfs-cache
-#         with:
-#             path: .git/lfs
-#             key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-
-#       - name: Git LFS Pull
-#         run: |
-#             git lfs pull
-#             git add .
-#             git reset --hard
-
-#       - name: Restore Library cache
-#         uses: actions/cache@v4
-#         with:
-#           path: Library
-#           key: Library-build-StandaloneWindows64
-#           restore-keys: |
-#             Library-build-
-#             Library-
-
-#       - uses: game-ci/unity-builder@v4
-#         env:
-#           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-#           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-#           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-#         with:
-#             targetPlatform: StandaloneWindows64
-
-#       - uses: actions/upload-artifact@v4
-#         with:
-#             name: build-StandaloneWindows64
-#             path: build/StandaloneWindows64
