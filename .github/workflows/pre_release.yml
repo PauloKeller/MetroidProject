@@ -2,6 +2,10 @@ name: Pre Release 🎮
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'releases/**'
 
 jobs:
   testRunner:
