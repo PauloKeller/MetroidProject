@@ -49,7 +49,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Test results (all modes)
+          name: ${{ matrix.targetPlatform }} - Test results (all modes)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
       - if: matrix.targetPlatform == 'Android'
         uses: jlumbroso/free-disk-space@v1.2.0
