@@ -2,7 +2,7 @@ name: Pull Request 🎮
 
 on:
   pull_request: 
-    branches: [ "!main", "!develop" ] 
+    branches: [ "!main" ] 
   workflow_dispatch:
 
 jobs:
