@@ -1,13 +1,14 @@
 name: Pre Release 🎮
 
 on:
-  push: 
-    branches:
-      - develop 
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'releases/**'
 
 jobs:
-  buildAndTestForLinuxBasedPlatforms:
+  testRunner:
     permissions: write-all
     name: Build for ${{ matrix.targetPlatform }} ⚙️
     runs-on: ubuntu-latest
@@ -61,6 +62,20 @@ jobs:
         with:
           name: ${{ matrix.targetPlatform }} - Test results (all modes)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+  buildForLinuxBasedPlatforms:
+    needs: testRunner
+    permissions: write-all
+    name: Build for ${{ matrix.targetPlatform }} ⚙️
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2022.3.23f1
+        targetPlatform:
+          - StandaloneLinux64
+    steps:
       - uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -77,6 +92,7 @@ jobs:
           path: build
 
   buildForWindowsBasedPlatforms:
+    needs: testRunner
     permissions: write-all
     name: Build for ${{ matrix.targetPlatform }} ⚙️
     runs-on: windows-2022
@@ -135,6 +151,7 @@ jobs:
           path: build
   
   buildForMacOSBasedPlatforms:
+    needs: testRunner
     permissions: write-all
     name: Build for ${{ matrix.targetPlatform }} ⚙️
     runs-on: macos-latest
