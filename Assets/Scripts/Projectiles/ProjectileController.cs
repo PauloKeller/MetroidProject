@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ProjectileController : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class ProjectileController : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(speed * Time.deltaTime * facingDirection);
+        float angle = 190f;
+        Vector2 direction = Quaternion.Euler(0, 0, angle) * facingDirection;
+        transform.Translate(direction * speed * Time.deltaTime);
+        Debug.Log(facingDirection);
     }
 }

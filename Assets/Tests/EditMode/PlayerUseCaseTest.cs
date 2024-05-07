@@ -15,6 +15,6 @@ public class PlayerUseCaseTest
         FlameBullet bullet = sut.CraftBullet() as FlameBullet;
 
         Assert.False(bullet.IsPiercing);
-        Assert.GreaterOrEqual(bullet.Damage, 10);
+        Assert.AreEqual(bullet.Damage, 20);
     }
 }
