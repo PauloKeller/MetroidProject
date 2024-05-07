@@ -5,6 +5,7 @@ using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using System;
 using Event = Unity.Services.Analytics.Event;
+using Codice.Client.BaseCommands.Merge;
 
 public class MyEvent : Event
 {
@@ -21,8 +22,9 @@ public class MyEvent : Event
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float moveSpeed = 10f;
     [SerializeField] float dashForce = 5f;
+    [SerializeField] float maxSpeed = 200f;
 
     [Header("Projectiles")]
     [SerializeField] GameObject projectile; 
@@ -46,11 +48,6 @@ public class PlayerController : MonoBehaviour
     private void Update() 
     {
         Move();
-
-        if (Input.GetKeyDown(KeyCode.E)) 
-        {
-            RecordCustomEvent();
-        }
     }
 
     private void RecordCustomEvent() 
@@ -77,7 +74,12 @@ public class PlayerController : MonoBehaviour
         Vector2 inputVector = PlayerControls.Player.Movement.ReadValue<Vector2>();
         Vector2 movementVector = playerUseCase.CalculateMovement(inputVector: inputVector);
 
-        MyRigidbody2D.AddForce(movementVector, ForceMode2D.Force);
+        if (MyRigidbody2D.velocity.magnitude > maxSpeed)
+        {
+            MyRigidbody2D.velocity = Vector2.ClampMagnitude(MyRigidbody2D.velocity, maxSpeed);
+        }
+
+        MyRigidbody2D.AddForce(movementVector, ForceMode2D.Force);   
     }
 
     void Jump(InputAction.CallbackContext context) 

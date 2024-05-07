@@ -20,9 +20,13 @@ public class ProjectileController : MonoBehaviour
 
     void Update()
     {
-        float angle = 190f;
+        float angle = 315f;
+        if (facingDirection == Vector2.left) 
+        {
+            angle = -angle;
+        }
+
         Vector2 direction = Quaternion.Euler(0, 0, angle) * facingDirection;
         transform.Translate(direction * speed * Time.deltaTime);
-        Debug.Log(facingDirection);
     }
 }

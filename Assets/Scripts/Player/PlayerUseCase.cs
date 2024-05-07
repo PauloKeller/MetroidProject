@@ -48,8 +48,8 @@ public class PlayerUseCase : IPlayerUseCaseInterface
             this.FacingDir = inputVector.normalized;
         }
         
-        Vector2 movementVector = inputVector * MoveSpeed;
+        Vector2 xMovement = inputVector * MoveSpeed;
 
-        return movementVector;
+        return new Vector2(xMovement.x, 0);
     }
 } 
