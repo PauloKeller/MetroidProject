@@ -284,9 +284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79b142acb7f484a47ad3b0baf972724e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 100
+  moveSpeed: 7
   dashForce: 10
-  maxSpeed: 200
+  maxSpeed: 14
   projectile: {fileID: 273884773915334960, guid: f475cd4ca52bd984c9526a18305d3bd5, type: 3}
 --- !u!1 &519420028
 GameObject:
