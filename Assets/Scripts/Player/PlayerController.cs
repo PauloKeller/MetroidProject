@@ -19,14 +19,6 @@ public class MyEvent : Event
     public bool PeculiarBool { set { SetParameter("peculiarBool", value); } }
 }
 
-public enum WeaponType 
-{ 
-    MachineGun,
-    Flamethrower,
-    Laser,
-    Cannon
-}
-
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
