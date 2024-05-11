@@ -18,8 +18,8 @@ public class PlayerUseCaseTest
     {
         IPlayerUseCaseInterface sut = new PlayerUseCase(moveSpeed: 5f);
 
-        Assert.AreEqual(sut.FacingDir, Vector2.right);
-        Assert.AreEqual(sut.EquipedWeapon.WeaponType, WeaponType.MachineGun);
+        Assert.AreEqual(Vector2.right, sut.FacingDir);
+        Assert.AreEqual(WeaponType.MachineGun, sut.EquipedWeapon.WeaponType);
     }
 
     [Test]

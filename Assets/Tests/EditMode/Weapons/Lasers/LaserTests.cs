@@ -7,9 +7,9 @@ class LaserTests
     {
         Laser sut = new Laser();
 
-        Assert.AreEqual(sut.Weight, 12.7f);
-        Assert.AreEqual(sut.FireRate, 5);
-        Assert.AreEqual(sut.AmmoCapacity, 700);
-        Assert.AreEqual(sut.WeaponType, WeaponType.Laser);
+        Assert.AreEqual(12.7f, sut.Weight);
+        Assert.AreEqual(5 ,sut.FireRate);
+        Assert.AreEqual(700, sut.AmmoCapacity);
+        Assert.AreEqual(WeaponType.Laser, sut.WeaponType);
     }
 }

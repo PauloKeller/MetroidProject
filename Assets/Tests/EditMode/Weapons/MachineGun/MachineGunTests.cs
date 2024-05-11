@@ -7,11 +7,11 @@ class MachineGunTests
     {
         MachineGun sut = new MachineGun();
 
-        Assert.AreEqual(sut.Weight, 12f);
-        Assert.AreEqual(sut.FireRate, 2);
-        Assert.AreEqual(sut.AmmoCapacity, 2000);
-        Assert.AreEqual(sut.WeaponType, WeaponType.MachineGun);
-        Assert.AreEqual(sut.CurrentProjectile.Damage, 10);
+        Assert.AreEqual(12f, sut.Weight);
+        Assert.AreEqual(2, sut.FireRate);
+        Assert.AreEqual(2000, sut.AmmoCapacity);
+        Assert.AreEqual(WeaponType.MachineGun, sut.WeaponType);
+        Assert.AreEqual(10, sut.CurrentProjectile.Damage);
     }
 
     [Test]
@@ -19,10 +19,10 @@ class MachineGunTests
     {
         MachineGun sut = new MachineGun();
 
-        Assert.AreEqual(sut.CurrentProjectile.Damage, 10);
+        Assert.AreEqual(10, sut.CurrentProjectile.Damage);
 
         sut.CurrentProjectile = new FlameBullet(new Bullet());
 
-        Assert.AreEqual(sut.CurrentProjectile.Damage, 20);
+        Assert.AreEqual(20, sut.CurrentProjectile.Damage);
     }
 }

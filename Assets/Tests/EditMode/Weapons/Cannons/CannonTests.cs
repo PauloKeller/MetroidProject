@@ -7,9 +7,9 @@ class CannonTests
     {
         Cannon sut = new Cannon();
 
-        Assert.AreEqual(sut.Weight, 25f);
-        Assert.AreEqual(sut.FireRate, 15);
-        Assert.AreEqual(sut.AmmoCapacity, 50);
-        Assert.AreEqual(sut.WeaponType, WeaponType.Cannon);
+        Assert.AreEqual(25f, sut.Weight);
+        Assert.AreEqual(15, sut.FireRate);
+        Assert.AreEqual(50, sut.AmmoCapacity);
+        Assert.AreEqual(WeaponType.Cannon, sut.WeaponType);
     }
 }

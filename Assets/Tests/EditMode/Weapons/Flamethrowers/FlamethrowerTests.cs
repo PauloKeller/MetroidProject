@@ -7,9 +7,9 @@ class FlamethrowerTests
     {
         Flamethrower sut = new Flamethrower();
 
-        Assert.AreEqual(sut.Weight, 15f);
-        Assert.AreEqual(sut.FireRate, 1);
-        Assert.AreEqual(sut.AmmoCapacity, 3000);
-        Assert.AreEqual(sut.WeaponType, WeaponType.Flamethrower);
+        Assert.AreEqual(15f, sut.Weight);
+        Assert.AreEqual(1, sut.FireRate);
+        Assert.AreEqual(3000, sut.AmmoCapacity);
+        Assert.AreEqual(WeaponType.Flamethrower, sut.WeaponType);
     }
 }
