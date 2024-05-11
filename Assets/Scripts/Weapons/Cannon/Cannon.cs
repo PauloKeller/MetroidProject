@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 public class Cannon : IWeapon
 {
+    private IProjectile currentAmmunition;
+
     public float Weight
     {
         get 
@@ -27,6 +29,26 @@ public class Cannon : IWeapon
         get 
         {
             return 50;
+        }
+    }
+
+    public WeaponType WeaponType
+    {
+        get
+        {
+            return WeaponType.Cannon;
+        }
+    }
+
+    public IProjectile CurrentProjectile
+    {
+        get
+        {
+            return currentAmmunition;
+        }
+        set
+        {
+            this.currentAmmunition = value;
         }
     }
 }

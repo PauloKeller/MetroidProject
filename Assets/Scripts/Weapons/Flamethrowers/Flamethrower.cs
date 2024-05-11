@@ -1,5 +1,6 @@
 ﻿public class Flamethrower : IWeapon
 {
+    private IProjectile currentAmmunition;
     public float Weight 
     {
         get 
@@ -21,6 +22,26 @@
         get 
         {
             return 3000;
+        }
+    }
+
+    public WeaponType WeaponType
+    {
+        get 
+        {
+            return WeaponType.Flamethrower;
+        }
+    }
+
+    public IProjectile CurrentProjectile
+    {
+        get
+        {
+            return currentAmmunition;
+        }
+        set
+        {
+            this.currentAmmunition = value;
         }
     }
 }

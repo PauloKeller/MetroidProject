@@ -1,26 +1,53 @@
 public class MachineGun : IWeapon
 {
-    public float Weight 
+    private IProjectile currentAmmunition;
+
+    public MachineGun() 
     {
-        get 
+        this.currentAmmunition = new Bullet();
+    }
+
+    public float Weight
+    {
+        get
         {
             return 12f;
         }
     }
 
-    public int FireRate 
+    public int FireRate
     {
-        get 
+        get
         {
             return 2;
         }
     }
 
-    public int AmmoCapacity 
+    public int AmmoCapacity
+    {
+        get
+        {
+            return 2000;
+        }
+    }
+
+    public WeaponType WeaponType
+    {
+        get
+        {
+            return WeaponType.MachineGun;
+        }
+    }
+
+    public IProjectile CurrentProjectile
     {
         get 
         {
-            return 2000;
+            return currentAmmunition;
+        }
+        set 
+        { 
+            this.currentAmmunition = value;
         }
     }
 }
