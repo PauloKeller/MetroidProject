@@ -1,15 +1,17 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ProjectileController : MonoBehaviour
 {
-    [SerializeField] float speed;
-    private Vector2 facingDirection = Vector2.right; 
+    private Vector2 facingDirection = Vector2.right;
+    private IProjectile projectile;
 
     private SpriteRenderer mySpriteRenderer => GetComponent<SpriteRenderer>();
 
     public void BuldProjectile(Vector2 facingDirection, IProjectile projectile) 
     {
         this.facingDirection = facingDirection;
+        this.projectile = projectile;
 
         if (projectile is FlameBullet) 
         {
@@ -19,6 +21,6 @@ public class ProjectileController : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(speed * Time.deltaTime * facingDirection);
+        transform.Translate(facingDirection * this.projectile.Speed * Time.deltaTime);
     }
 }

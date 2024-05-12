@@ -12,7 +12,7 @@ public class Bullet : IProjectile
     {
         get 
         {
-            return 5f;
+            return 12f;
         }
     }
 

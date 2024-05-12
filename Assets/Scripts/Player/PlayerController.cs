@@ -5,6 +5,7 @@ using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using System;
 using Event = Unity.Services.Analytics.Event;
+using Codice.Client.BaseCommands.Merge;
 
 public class MyEvent : Event
 {
@@ -21,11 +22,12 @@ public class MyEvent : Event
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float moveSpeed = 10f;
     [SerializeField] float dashForce = 5f;
+    [SerializeField] float maxSpeed = 200f;
 
     [Header("Projectiles")]
-    [SerializeField] GameObject projectile; 
+    [SerializeField] GameObject projectilePrefab; 
 
     private Rigidbody2D MyRigidbody2D => GetComponent<Rigidbody2D>();
 
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
         PlayerControls = new PlayerControls();
         PlayerControls.Player.Enable();
         PlayerControls.Player.Jump.performed += Jump;
-        PlayerControls.Player.Fire.performed += Fire;
+        PlayerControls.Player.Fire.performed += FireWeapon;
         PlayerControls.Player.Dash.performed += Dash;
 
         playerUseCase = new PlayerUseCase(moveSpeed: moveSpeed);
@@ -47,9 +49,40 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
+        ChangeWieldedWeapon();
+
+        ChangeWeaponAmmo();
+    }
+
+    private void ChangeWeaponAmmo() 
+    {
         if (Input.GetKeyDown(KeyCode.E)) 
+        { 
+            playerUseCase.ChangeCurrentWeaponAmmunition();
+        }
+    }
+
+    private void ChangeWieldedWeapon()
+    { 
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            RecordCustomEvent();
+            playerUseCase.WieldWeapon(WeaponType.MachineGun);
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            playerUseCase.WieldWeapon(WeaponType.Flamethrower);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            playerUseCase.WieldWeapon(WeaponType.Laser);
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            playerUseCase.WieldWeapon(WeaponType.Cannon);
         }
     }
 
@@ -77,7 +110,12 @@ public class PlayerController : MonoBehaviour
         Vector2 inputVector = PlayerControls.Player.Movement.ReadValue<Vector2>();
         Vector2 movementVector = playerUseCase.CalculateMovement(inputVector: inputVector);
 
-        MyRigidbody2D.AddForce(movementVector, ForceMode2D.Force);
+        if (MyRigidbody2D.velocity.magnitude > maxSpeed)
+        {
+            MyRigidbody2D.velocity = Vector2.ClampMagnitude(MyRigidbody2D.velocity, maxSpeed);
+        }
+
+        MyRigidbody2D.AddForce(movementVector, ForceMode2D.Force);   
     }
 
     void Jump(InputAction.CallbackContext context) 
@@ -87,15 +125,13 @@ public class PlayerController : MonoBehaviour
             MyRigidbody2D.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
         }
     }
-    void Fire(InputAction.CallbackContext context) 
+    void FireWeapon(InputAction.CallbackContext context) 
     {
         if (context.performed)
         {
-            if (playerUseCase.CraftBullet() is FlameBullet flameBullet)
-            {
-                GameObject prefab = Instantiate(projectile, gameObject.transform.position, Quaternion.identity);
-                prefab.GetComponent<ProjectileController>().BuldProjectile(facingDirection: playerUseCase.FacingDir, projectile: flameBullet);
-            }
+            GameObject prefab = Instantiate(projectilePrefab, gameObject.transform.position, Quaternion.identity);
+            IProjectile projectile = playerUseCase.EquipedWeapon.CurrentProjectile;
+            prefab.GetComponent<ProjectileController>().BuldProjectile(facingDirection: playerUseCase.FacingDir, projectile: projectile);
         }
     } 
 

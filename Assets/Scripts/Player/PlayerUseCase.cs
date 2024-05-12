@@ -1,44 +1,30 @@
+using System;
 using UnityEngine;
 
 public interface IPlayerUseCaseInterface {
     Vector2 CalculateMovement(Vector2 inputVector);
     public Vector2 FacingDir { get; }
-    public IProjectile CraftBullet();
+    public IWeapon WieldWeapon(WeaponType weaponType);
+    public IWeapon EquipedWeapon { get; }
+    public IWeapon ChangeCurrentWeaponAmmunition();
 }
-
 public class PlayerUseCase : IPlayerUseCaseInterface
 {
-    public int metallicComponentsAmount = 0;
-    public int chemicalSubstancesAmount = 0;
-    public int flammableFuelAmount = 0;
-    public int powerBatteryAmount = 0;
-    public int cryogenicGasesAmount = 0;
-    public int nuclearMaterialsAmount = 0;
-
-    readonly float MoveSpeed = 5f; 
-
+    private IWeapon[] weapons = {
+       new MiniGun(weapon: new MachineGun()),
+       new PortableFlamethrower(weapon: new Flamethrower()),
+       new LaserBeam(weapon: new Laser()),
+       new HandCannon(weapon: new Cannon())
+    };
+    // TODO: Should be moved to the player model
+    private float moveSpeed = 5f; 
     public Vector2 FacingDir { get;  private set; }
+    public IWeapon EquipedWeapon { get; private set; }
 
     public PlayerUseCase(float moveSpeed) {
-        this.MoveSpeed = moveSpeed;
+        this.moveSpeed = moveSpeed;
         this.FacingDir = Vector2.right;
-    }
-
-    public IProjectile CraftBullet() {
-        int metallicsReq = 0;
-        int flammableReq = 0;
-        
-        Bullet bullet = new Bullet();
-
-        if (true) 
-        {
-            metallicsReq = 10;
-            flammableReq = 5;
-
-            return new FlameBullet(bullet);
-        }
-
-        return bullet;
+        this.EquipedWeapon = new MiniGun(new MachineGun());
     }
 
     public Vector2 CalculateMovement(Vector2 inputVector)
@@ -48,8 +34,35 @@ public class PlayerUseCase : IPlayerUseCaseInterface
             this.FacingDir = inputVector.normalized;
         }
         
-        Vector2 movementVector = inputVector * MoveSpeed;
+        Vector2 xMovement = inputVector * moveSpeed;
 
-        return movementVector;
+        return new Vector2(xMovement.x, 0);
+    }
+
+    public IWeapon WieldWeapon(WeaponType weaponType) 
+    {
+        foreach (var item in weapons)
+        {
+            if (weaponType == item.WeaponType)
+            {
+                this.EquipedWeapon = item;
+            }
+        }
+
+        return this.EquipedWeapon;
+    }
+
+    public IWeapon ChangeCurrentWeaponAmmunition() 
+    {
+        switch (this.EquipedWeapon.WeaponType)
+        {
+            case WeaponType.MachineGun:
+                FlameBullet flameBullet = new FlameBullet(new Bullet());
+                this.EquipedWeapon.CurrentProjectile = flameBullet;
+                Debug.Log($"Changing {this.EquipedWeapon} bullet to {flameBullet}");
+                break;
+        }
+
+        return this.EquipedWeapon;
     }
 } 
