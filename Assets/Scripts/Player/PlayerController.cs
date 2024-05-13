@@ -56,9 +56,34 @@ public class PlayerController : MonoBehaviour
 
     private void ChangeWeaponAmmo() 
     {
-        if (Input.GetKeyDown(KeyCode.E)) 
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
         { 
-            playerUseCase.ChangeCurrentWeaponAmmunition();
+            playerUseCase.ChangeCurrentWeaponAmmunition(ProjectileType.Metal);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            playerUseCase.ChangeCurrentWeaponAmmunition(ProjectileType.Flammable);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            playerUseCase.ChangeCurrentWeaponAmmunition(ProjectileType.Cryogenic);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            playerUseCase.ChangeCurrentWeaponAmmunition(ProjectileType.Chemical);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            playerUseCase.ChangeCurrentWeaponAmmunition(ProjectileType.Electrical);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            playerUseCase.ChangeCurrentWeaponAmmunition(ProjectileType.Nuclear);
         }
     }
 

@@ -1,18 +1,18 @@
-﻿public class EnergyCell : IProjectile
+﻿public class FuelTank : IProjectile
 {
     public int Damage 
     {
         get 
         {
-            return 30;
+            return 5;
         }
     }
 
-    public float Speed 
+    public float Speed
     {
         get 
         {
-            return 17f;
+            return 5;
         }
     }
 
@@ -27,8 +27,8 @@
     public ProjectileType ProjectileType
     {
         get 
-        { 
-            return ProjectileType.Electrical;
+        {
+            return ProjectileType.Flammable;
         }
     }
 }

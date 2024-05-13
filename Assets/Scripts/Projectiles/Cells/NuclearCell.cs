@@ -10,4 +10,12 @@ public class NuclearCell: Projectile
     {
     
     }
+
+    public override ProjectileType ProjectileType
+    {
+        get
+        {
+            return ProjectileType.Nuclear;
+        }
+    }
 }

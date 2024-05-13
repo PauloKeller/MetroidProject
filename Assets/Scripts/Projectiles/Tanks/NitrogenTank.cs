@@ -1,7 +1,7 @@
-﻿public class IceCell : Projectile
+﻿public class NitrogenTank : Projectile
 {
-    public IceCell(IProjectile projectile): base(projectile)
-    { 
+    public NitrogenTank(IProjectile projectile) : base(projectile)
+    {
     }
 
     public override ProjectileType ProjectileType

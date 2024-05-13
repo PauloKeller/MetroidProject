@@ -30,4 +30,12 @@ public abstract class Projectile : IProjectile
             return projectile.IsPiercing;
         }
     }
+
+    public virtual ProjectileType ProjectileType
+    {
+        get
+        {
+            return projectile.ProjectileType; 
+        }
+    }
 }

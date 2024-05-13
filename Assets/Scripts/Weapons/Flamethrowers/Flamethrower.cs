@@ -1,6 +1,11 @@
 ﻿public class Flamethrower : IWeapon
 {
     private IProjectile currentAmmunition;
+
+    public Flamethrower()
+    {
+        this.currentAmmunition = new FuelTank();
+    }
     public float Weight 
     {
         get 

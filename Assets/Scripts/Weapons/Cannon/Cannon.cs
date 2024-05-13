@@ -8,6 +8,11 @@ public class Cannon : IWeapon
 {
     private IProjectile currentAmmunition;
 
+    public Cannon()
+    {
+        this.currentAmmunition = new NuclearShell();
+    }
+
     public float Weight
     {
         get 
