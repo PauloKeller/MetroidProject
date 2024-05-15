@@ -25,4 +25,17 @@ public class ProjectileController : MonoBehaviour
     {
         transform.Translate(facingDirection * this.projectile.Speed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            // TODO: Should check the IDamageable interface before take damage
+            EnemyController enemy = collision.GetComponent<EnemyController>();
+            if (enemy.IsAlive)
+            { 
+                enemy.OnTakeShot(projectile: projectile);
+            }
+        }
+    }
 }
