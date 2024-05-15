@@ -2,6 +2,11 @@
 {
     private IProjectile currentAmmunition;
 
+    public Laser()
+    {
+        this.currentAmmunition = new EnergyCell();
+    }
+
     public float Weight 
     {
         get 

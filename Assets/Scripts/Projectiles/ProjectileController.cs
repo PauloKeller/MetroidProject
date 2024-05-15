@@ -13,6 +13,8 @@ public class ProjectileController : MonoBehaviour
         this.facingDirection = facingDirection;
         this.projectile = projectile;
 
+        Debug.Log($"Shoting {projectile}");
+
         if (projectile is FlameBullet) 
         {
             mySpriteRenderer.color = Color.red;

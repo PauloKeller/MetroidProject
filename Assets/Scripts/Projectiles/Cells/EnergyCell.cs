@@ -1,10 +1,10 @@
-public class Bullet : IProjectile
+﻿public class EnergyCell : IProjectile
 {
-    public virtual int Damage
+    public int Damage 
     {
         get 
         {
-            return 10;
+            return 30;
         }
     }
 
@@ -12,23 +12,23 @@ public class Bullet : IProjectile
     {
         get 
         {
-            return 12f;
+            return 17f;
         }
     }
 
-    public bool IsPiercing 
+    public bool IsPiercing
     {
         get 
         {
-            return false;
+            return true;
         }
     }
 
     public ProjectileType ProjectileType
     {
         get 
-        {
-            return ProjectileType.Metal;
+        { 
+            return ProjectileType.Electrical;
         }
     }
 }

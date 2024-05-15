@@ -56,7 +56,7 @@ public class PlayerUseCaseTest
         sut.WieldWeapon(WeaponType.MachineGun);
 
         // Act
-        IWeapon weapon = sut.ChangeCurrentWeaponAmmunition();
+        IWeapon weapon = sut.ChangeCurrentWeaponAmmunition(ProjectileType.Flammable);
 
         // Assert
         Assert.IsTrue(weapon.CurrentProjectile is FlameBullet);

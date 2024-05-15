@@ -4,5 +4,19 @@ public class FlameBullet : Projectile
     {
     }
 
-    public override int Damage => base.Damage + 10;
+    public override int Damage
+    {
+        get 
+        {
+            return base.Damage + 10;
+        }
+    }
+
+    public override ProjectileType ProjectileType
+    {
+        get
+        {
+            return ProjectileType.Flammable;
+        }
+    }
 }

@@ -1,22 +1,22 @@
-public class Bullet : IProjectile
+﻿public class NuclearShell : IProjectile
 {
-    public virtual int Damage
+    public int Damage
     {
         get 
         {
-            return 10;
+            return 100;
         }
     }
 
-    public float Speed 
+    public float Speed
     {
         get 
         {
-            return 12f;
+            return 5f;
         }
     }
 
-    public bool IsPiercing 
+    public bool IsPiercing
     {
         get 
         {
@@ -26,9 +26,9 @@ public class Bullet : IProjectile
 
     public ProjectileType ProjectileType
     {
-        get 
+        get
         {
-            return ProjectileType.Metal;
+            return ProjectileType.Nuclear;
         }
     }
 }
