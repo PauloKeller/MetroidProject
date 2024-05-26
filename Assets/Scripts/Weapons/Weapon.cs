@@ -4,6 +4,8 @@ public interface IWeapon
     float Weight { get; }
     int FireRate { get; }
     int AmmoCapacity { get; }
+    ///  The MaxRange set the Projectile MaxTravelDistance 
+    float MaxRange { get;  }
     WeaponType WeaponType { get; }
     IProjectile CurrentProjectile { get; set; }
 }
@@ -60,6 +62,14 @@ public abstract class Weapon : IWeapon
         set 
         {
             weapon.CurrentProjectile = value;
+        }
+    }
+
+    public float MaxRange
+    {
+        get 
+        {
+            return weapon.MaxRange;
         }
     }
 }

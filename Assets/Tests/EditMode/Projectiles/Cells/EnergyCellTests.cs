@@ -1,15 +1,56 @@
 using NUnit.Framework;
 
-class EnergyCellTests 
+public class EnergyCellTests
 {
     [Test]
-    public void CreateEnergyCellTestPasses()
+    public void Damage_ReturnsValidDamage()
     {
-        EnergyCell sut = new EnergyCell();
+        // Arrange
+        EnergyCell energyCell = new EnergyCell();
 
-        Assert.AreEqual(30, sut.Damage);
-        Assert.AreEqual(17f, sut.Speed);
-        Assert.AreEqual(true, sut.IsPiercing);
-        Assert.AreEqual(ProjectileType.Electrical, sut.ProjectileType);
+        // Act
+        int damage = energyCell.Damage;
+
+        // Assert
+        Assert.AreEqual(30, damage);
+    }
+
+    [Test]
+    public void Speed_ReturnsValidSpeed()
+    {
+        // Arrange
+        EnergyCell energyCell = new EnergyCell();
+
+        // Act
+        float speed = energyCell.Speed;
+
+        // Assert
+        Assert.AreEqual(17f, speed);
+    }
+
+    [Test]
+    public void IsPiercing_ReturnsTrue()
+    {
+        // Arrange
+        EnergyCell energyCell = new EnergyCell();
+
+        // Act
+        bool isPiercing = energyCell.IsPiercing;
+
+        // Assert
+        Assert.IsTrue(isPiercing);
+    }
+
+    [Test]
+    public void ProjectileType_ReturnsValidType()
+    {
+        // Arrange
+        EnergyCell energyCell = new EnergyCell();
+
+        // Act
+        ProjectileType type = energyCell.ProjectileType;
+
+        // Assert
+        Assert.AreEqual(ProjectileType.Electrical, type);
     }
 }

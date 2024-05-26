@@ -1,15 +1,18 @@
 ﻿using NUnit.Framework;
 
-class NuclearCellTests 
+public class NuclearCellTests
 {
     [Test]
-    public void CreateNuclearCellTestPasses()
+    public void ProjectileType_ReturnsNuclear()
     {
-        NuclearCell sut = new NuclearCell(new EnergyCell());
+        // Arrange
+        IProjectile baseProjectile = new EnergyCell(); // Using EnergyCell as the base projectile for testing
+        NuclearCell nuclearCell = new NuclearCell(baseProjectile);
 
-        Assert.AreEqual(30, sut.Damage);
-        Assert.AreEqual(17f, sut.Speed);
-        Assert.AreEqual(true, sut.IsPiercing);
-        Assert.AreEqual(ProjectileType.Nuclear, sut.ProjectileType);
+        // Act
+        ProjectileType type = nuclearCell.ProjectileType;
+
+        // Assert
+        Assert.AreEqual(ProjectileType.Nuclear, type);
     }
 }

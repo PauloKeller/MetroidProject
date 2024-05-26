@@ -50,4 +50,12 @@ public class MachineGun : IWeapon
             this.currentAmmunition = value;
         }
     }
+
+    public float MaxRange
+    {
+        get
+        {
+            return 15f;
+        }
+    }
 }

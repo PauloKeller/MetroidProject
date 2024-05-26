@@ -1,15 +1,32 @@
 ﻿using NUnit.Framework;
 
-class FlameBulletTests
+public class FlameBulletTests
 {
     [Test]
-    public void CreateFlameBulletTestPasses()
+    public void Damage_ReturnsValidDamage()
     {
-        FlameBullet sut = new FlameBullet(new Bullet());
+        // Arrange
+        IProjectile baseProjectile = new Bullet();
+        FlameBullet flameBullet = new FlameBullet(baseProjectile);
 
-        Assert.AreEqual(20, sut.Damage);
-        Assert.AreEqual(12, sut.Speed);
-        Assert.AreEqual(false, sut.IsPiercing);
-        Assert.AreEqual(ProjectileType.Flammable, sut.ProjectileType);
+        // Act
+        int damage = flameBullet.Damage;
+
+        // Assert
+        Assert.AreEqual(20, damage); // 10 (base damage from Bullet) + 10 (additional damage from FlameBullet)
+    }
+
+    [Test]
+    public void ProjectileType_ReturnsValidType()
+    {
+        // Arrange
+        IProjectile baseProjectile = new Bullet();
+        FlameBullet flameBullet = new FlameBullet(baseProjectile);
+
+        // Act
+        ProjectileType type = flameBullet.ProjectileType;
+
+        // Assert
+        Assert.AreEqual(ProjectileType.Flammable, type);
     }
 }

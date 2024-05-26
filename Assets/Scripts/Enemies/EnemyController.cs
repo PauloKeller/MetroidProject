@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 
     // TODO: Move to stats
     private int healthPoints = 100;
-    private float basicResistence = 0.5f;
+    private float basicResistence = 0.1f;
     public bool IsAlive
     {
         get
@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour
     {
         this.healthPoints = 0;
         this.isAlive = false;
+        Destroy(this.gameObject);
         Debug.Log($"Enemy dead!");
     }
     public void OnTakeShot(IProjectile projectile) 
