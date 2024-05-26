@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-public class Cannon : IWeapon
+﻿public class Cannon : IWeapon
 {
     private IProjectile currentAmmunition;
 
@@ -54,6 +48,14 @@ public class Cannon : IWeapon
         set
         {
             this.currentAmmunition = value;
+        }
+    }
+
+    public float MaxRange
+    {
+        get
+        {
+            return 8f;
         }
     }
 }

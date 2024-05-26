@@ -9,9 +9,8 @@ public class PlayerUseCaseTest
     [SetUp]
     public void SetUp()
     {
-       sut = new PlayerUseCase(moveSpeed: 5f);
+        sut = new PlayerUseCase(moveSpeed: 5f);
     }
-
 
     [Test]
     public void CreatePlayerUseCaseTestPasses()

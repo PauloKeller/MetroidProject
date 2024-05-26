@@ -60,9 +60,9 @@ public class PlayerUseCase : IPlayerUseCaseInterface
             this.FacingDir = inputVector.normalized;
         }
         
-        Vector2 xMovement = inputVector * moveSpeed;
+        Vector2 movement = inputVector * moveSpeed;
 
-        return new Vector2(xMovement.x, 0);
+        return movement;
     }
 
     public IWeapon WieldWeapon(WeaponType weaponType) 

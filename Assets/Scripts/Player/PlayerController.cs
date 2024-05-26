@@ -53,6 +53,16 @@ public class PlayerController : MonoBehaviour
 
         ChangeWeaponAmmo();
     }
+    async void Start()
+    {
+        // TODO: Should be on the game start
+        var options = new InitializationOptions();
+
+        options.SetEnvironmentName("staging");
+        await UnityServices.InitializeAsync(options);
+
+        AnalyticsService.Instance.StartDataCollection();
+    }
 
     private void ChangeWeaponAmmo() 
     {
@@ -120,27 +130,11 @@ public class PlayerController : MonoBehaviour
         AnalyticsService.Instance.RecordEvent(myEvent);
     }
 
-    async void Start()
-    {
-        // TODO: Should be on the game start
-        var options = new InitializationOptions();
-
-        options.SetEnvironmentName("staging");
-        await UnityServices.InitializeAsync(options);
-
-        AnalyticsService.Instance.StartDataCollection();
-    }
-
     void Move() {
         Vector2 inputVector = PlayerControls.Player.Movement.ReadValue<Vector2>();
         Vector2 movementVector = playerUseCase.CalculateMovement(inputVector: inputVector);
 
-        if (MyRigidbody2D.velocity.magnitude > maxSpeed)
-        {
-            MyRigidbody2D.velocity = Vector2.ClampMagnitude(MyRigidbody2D.velocity, maxSpeed);
-        }
-
-        MyRigidbody2D.AddForce(movementVector, ForceMode2D.Force);   
+        MyRigidbody2D.velocity = new Vector2(movementVector.x, MyRigidbody2D.velocity.y);
     }
 
     void Jump(InputAction.CallbackContext context) 
@@ -156,7 +150,11 @@ public class PlayerController : MonoBehaviour
         {
             GameObject prefab = Instantiate(projectilePrefab, gameObject.transform.position, Quaternion.identity);
             IProjectile projectile = playerUseCase.EquipedWeapon.CurrentProjectile;
-            prefab.GetComponent<ProjectileController>().BuldProjectile(facingDirection: playerUseCase.FacingDir, projectile: projectile);
+            IWeapon weapon = playerUseCase.EquipedWeapon;
+
+            prefab.GetComponent<ProjectileController>().BuldProjectile(
+                facingDirection: playerUseCase.FacingDir, 
+                projectile: projectile, maxTravelDistance: weapon.MaxRange);
         }
     } 
 

@@ -49,4 +49,12 @@
             this.currentAmmunition = value;
         }
     }
+
+    public float MaxRange
+    {
+        get
+        {
+            return 4f;
+        }
+    }
 }

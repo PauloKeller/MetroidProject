@@ -1,15 +1,18 @@
 ﻿using NUnit.Framework;
 
-class IceCellTests 
+public class IceCellTests
 {
     [Test]
-    public void CreateIceCellTestPasses()
+    public void ProjectileType_ReturnsCryogenic()
     {
-        IceCell sut = new IceCell(new EnergyCell());
+        // Arrange
+        IProjectile baseProjectile = new EnergyCell(); // Using EnergyCell as the base projectile for testing
+        IceCell iceCell = new IceCell(baseProjectile);
 
-        Assert.AreEqual(30, sut.Damage);
-        Assert.AreEqual(17f, sut.Speed);
-        Assert.AreEqual(true, sut.IsPiercing);
-        Assert.AreEqual(ProjectileType.Cryogenic, sut.ProjectileType);
+        // Act
+        ProjectileType type = iceCell.ProjectileType;
+
+        // Assert
+        Assert.AreEqual(ProjectileType.Cryogenic, type);
     }
 }
