@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
@@ -28,6 +27,16 @@ public class EnemyController : MonoBehaviour
     {
         this.healthPoints = 0;
         this.isAlive = false;
+
+        // TODO: Should be remove when start menu is ready
+        // just using for testing
+        GameObject gameObject = GameObject.FindWithTag("Inventory");
+        if (gameObject != null)
+        {
+            InventoryController inventory = gameObject.GetComponent<InventoryController>();
+            inventory.OnPutMaterial();
+        }
+
         Destroy(this.gameObject);
         Debug.Log($"Enemy dead!");
     }
