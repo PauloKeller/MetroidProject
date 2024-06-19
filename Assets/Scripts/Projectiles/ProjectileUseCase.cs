@@ -18,7 +18,7 @@ public class ProjectileUseCase : IProjectileUseCase
     {
         float distanceTraveled = Vector2.Distance(transform.position, previousPosition);
         totalDistance += distanceTraveled;
-        Debug.Log("Distance traveled: " + distanceTraveled.ToString() + "   Total Distance: " + totalDistance.ToString());
+        //Debug.Log("Distance traveled: " + distanceTraveled.ToString() + "   Total Distance: " + totalDistance.ToString());
         previousPosition = transform.position;
 
         return totalDistance;

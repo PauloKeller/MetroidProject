@@ -1,19 +1,33 @@
-﻿public class Inventory 
+﻿using System.Collections.Generic;
+
+public class Inventory 
 {
-    public Inventory(RawMaterialInventorySlot ironInventorySlot) {
-        this.ironInventorySlot = ironInventorySlot;
+    public Inventory(RawMaterialInventorySlot metalInventorySlot, 
+        RawMaterialInventorySlot fuelInventorySlot,
+        RawMaterialInventorySlot energyInventorySlot,
+        RawMaterialInventorySlot chemicalInventorySlot,
+        RawMaterialInventorySlot radioactiveInventorySlot) {
+     
+        rawMaterialInventorySlots = new List<RawMaterialInventorySlot>
+        {
+            metalInventorySlot,
+            fuelInventorySlot,
+            energyInventorySlot,
+            chemicalInventorySlot,
+            radioactiveInventorySlot
+        };
     }
 
-    private RawMaterialInventorySlot ironInventorySlot;
-
-    public RawMaterialInventorySlot IronInventorySlot
-    { 
-        get { 
-            return ironInventorySlot; 
+    List<RawMaterialInventorySlot> rawMaterialInventorySlots;
+    public List<RawMaterialInventorySlot> RawMaterialInventorySlots 
+    {
+        get 
+        { 
+            return rawMaterialInventorySlots;
         }
         set 
         {
-            ironInventorySlot = value;
+            rawMaterialInventorySlots = value;
         }
     }
 }

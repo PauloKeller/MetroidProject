@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-public class IronOre : IRawMaterial
+﻿public class RadioactiveRawMaterial : IRawMaterial
 {
     public float Weight
     {
-        get 
+        get
         {
-            return 1.5f;
+            return 10f;
         }
     }
 
     public int MaxStack
     {
-        get 
+        get
         {
             return 9999;
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class InvetorySlotUpdateException : Exception
+public class InventorySlotUpdateException : Exception
 {
     InventorySlotExceptionCode code;
 
@@ -9,7 +9,7 @@ public class InvetorySlotUpdateException : Exception
         get { return code; }
     }
 
-    public InvetorySlotUpdateException(InventorySlotExceptionCode code)
+    public InventorySlotUpdateException(InventorySlotExceptionCode code)
     {
         this.code = code;
     }

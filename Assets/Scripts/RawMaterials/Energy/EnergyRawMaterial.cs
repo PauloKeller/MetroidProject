@@ -1,16 +1,16 @@
-﻿public class Fuel : IRawMaterial
+﻿public class EnergyRawMaterial : IRawMaterial
 {
     public float Weight
     {
-        get 
+        get
         {
-            return 1f;
+            return 4f;
         }
     }
 
     public int MaxStack
     {
-        get 
+        get
         {
             return 9999;
         }

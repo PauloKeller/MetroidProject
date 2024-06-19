@@ -1,41 +1,40 @@
-﻿
-// TODO: Create Interface
-using UnityEngine;
+﻿using UnityEngine;
 
-public class InventoryUseCase
+public interface IInventoryUseCase 
 {
-    Inventory inventory;
+    public void UpdateRawMaterialQuantity(IRawMaterial rawMaterial, int amount);
+}
+
+public class InventoryUseCase: IInventoryUseCase
+{
+    private Inventory inventory;
 
     public InventoryUseCase(Inventory inventory)
     {
         this.inventory = inventory;
     }
 
-    public void UpdateRawMaterialQuantity(IRawMaterial rawMaterial, int amount) 
+    public void UpdateRawMaterialQuantity(IRawMaterial rawMaterial, int amount)
     {
-        Debug.Log($"Updating {rawMaterial} with amount: {amount}");
-
-        if (rawMaterial is IronOre)
+        for (int index = 0; index < inventory.RawMaterialInventorySlots.Count; index++) 
         {
-            try
+            var item = inventory.RawMaterialInventorySlots[index];
+
+            if (item.rawMaterial.GetType() == rawMaterial.GetType()) 
             {
-                if (!inventory.IronInventorySlot.CanUpdateQuantity(amount))
+                // TODO: Maybe too overkill to check the amount
+                if (!item.CanUpdateQuantity(amount))
                 {
                     var code = InventorySlotExceptionCode.NegativeQuantity;
-                    throw new InvetorySlotUpdateException(code: code);
+                    throw new InventorySlotUpdateException(code: code);
                 }
 
-                var quantity = inventory.IronInventorySlot.quantity;
-                var newQuantity = quantity += amount;
+                var newQuantity = item.quantity + amount;
                 var updatedInventorySlot = new RawMaterialInventorySlot(rawMaterial: rawMaterial, quantity: newQuantity);
 
-                Debug.Log($"Raw material: {inventory.IronInventorySlot.rawMaterial}, quantity: {inventory.IronInventorySlot.quantity}");
-                inventory.IronInventorySlot = updatedInventorySlot;
-                Debug.Log($"Raw material: {inventory.IronInventorySlot.rawMaterial}, new quantity: {inventory.IronInventorySlot.quantity}");
-            }
-            catch (InvetorySlotUpdateException e)
-            {
-                Debug.Log($"Fail to update raw material, exception code: {e.Code}");
+                Debug.Log($"Updating {rawMaterial} with {newQuantity}");
+
+                inventory.RawMaterialInventorySlots[index] = updatedInventorySlot;
             }
         }
     }

@@ -38,34 +38,27 @@ public class EnemyController : MonoBehaviour
         }
 
         Destroy(this.gameObject);
-        Debug.Log($"Enemy dead!");
     }
-    public void OnTakeShot(IProjectile projectile) 
+    public void OnTakeShot(IProjectile projectile)
     {
-        Debug.Log($"Hit by {projectile}");
         mySpriteRenderer.color = GetAmmunitionEffect(projectile: projectile);
         healthPoints -= CalculateDamage(projectile: projectile);
         if (healthPoints < 0)
         {
             this.OnDeath();
         }
-        Debug.Log($"Enemy health: {healthPoints}");
     }
-    
+
     // TODO: Move all this bellow into the usecase
-    private int CalculateDamage(IProjectile projectile) 
+    private int CalculateDamage(IProjectile projectile)
     {
         float mitigatedDamage = basicResistence * projectile.Damage;
-        Debug.Log($"Mitigate damage: {mitigatedDamage}");
-
         int damage = projectile.Damage - Mathf.RoundToInt(mitigatedDamage);
 
-        if (damage < 0) 
+        if (damage < 0)
         {
             return 0;
         }
-
-        Debug.Log($"Will suffer {damage}");
 
         return damage;
     }

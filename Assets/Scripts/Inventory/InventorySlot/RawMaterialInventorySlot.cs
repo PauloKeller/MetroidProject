@@ -14,7 +14,7 @@ public class RawMaterialInventorySlot
 
     public bool CanUpdateQuantity(int amount) 
     { 
-        if ((this.quantity += amount) > 0) 
+        if ((this.quantity + amount) > 0) 
         {
             return true;
         }
