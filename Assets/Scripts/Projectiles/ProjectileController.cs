@@ -20,7 +20,7 @@ public class ProjectileController : MonoBehaviour
         this.facingDirection = facingDirection;
         this.projectile = projectile;
 
-        Debug.Log($"Shoting {projectile} with MaxTravelDistance: {maxTravelDistance}");
+        //Debug.Log($"Shoting {projectile} with MaxTravelDistance: {maxTravelDistance}");
     }
 
     void Update()

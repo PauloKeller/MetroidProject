@@ -3,9 +3,7 @@ using UnityEngine.InputSystem;
 using Unity.Services.Analytics;
 using Unity.Services.Core;
 using Unity.Services.Core.Environments;
-using System;
 using Event = Unity.Services.Analytics.Event;
-using Codice.Client.BaseCommands.Merge;
 
 public class MyEvent : Event
 {
@@ -164,5 +162,11 @@ public class PlayerController : MonoBehaviour
         {
             MyRigidbody2D.AddForce(playerUseCase.FacingDir * dashForce, ForceMode2D.Impulse);
         }
+    }
+
+    // TODO: Create the Collectable behavior
+    public void OnCollect() 
+    { 
+        
     }
 }
