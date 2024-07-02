@@ -2,20 +2,10 @@
 
 public class Inventory 
 {
-    public Inventory(RawMaterialInventorySlot metalInventorySlot, 
-        RawMaterialInventorySlot fuelInventorySlot,
-        RawMaterialInventorySlot energyInventorySlot,
-        RawMaterialInventorySlot chemicalInventorySlot,
-        RawMaterialInventorySlot radioactiveInventorySlot) {
-     
-        rawMaterialInventorySlots = new List<RawMaterialInventorySlot>
-        {
-            metalInventorySlot,
-            fuelInventorySlot,
-            energyInventorySlot,
-            chemicalInventorySlot,
-            radioactiveInventorySlot
-        };
+    public Inventory(List<RawMaterialInventorySlot> rawMaterialInventorySlots, 
+        List<MachineGunAmmoInventorySlot> MachineGunInventorySlot) {
+        this.rawMaterialInventorySlots = rawMaterialInventorySlots;
+        this.MachineGunInventorySlot = MachineGunInventorySlot;
     }
 
     List<RawMaterialInventorySlot> rawMaterialInventorySlots;
@@ -30,4 +20,6 @@ public class Inventory
             rawMaterialInventorySlots = value;
         }
     }
+
+    public List<MachineGunAmmoInventorySlot> MachineGunInventorySlot;
 }

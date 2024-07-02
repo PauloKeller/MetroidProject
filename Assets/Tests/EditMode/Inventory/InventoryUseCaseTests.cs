@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 [TestFixture]
@@ -20,7 +21,16 @@ public class InventoryUseCaseTests
         chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 120);
         radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 247);
 
-        inventory = new Inventory(metalInventorySlot, fuelInventorySlot, energyInventorySlot, chemicalInventorySlot, radioactiveInventorySlot);
+        List <RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
+        {
+            metalInventorySlot,
+            fuelInventorySlot,
+            energyInventorySlot,
+            chemicalInventorySlot,
+            radioactiveInventorySlot
+        };
+
+        inventory = new Inventory(rawMaterialSlots);
     }
 
 

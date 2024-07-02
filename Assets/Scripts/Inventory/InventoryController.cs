@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
@@ -6,17 +7,21 @@ public class InventoryController : MonoBehaviour
 
     private void Awake()
     {
-        RawMaterialInventorySlot metalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new MetalRawMaterial(), quantity: 100);
-        RawMaterialInventorySlot fuelInventorySlot = new RawMaterialInventorySlot(rawMaterial: new FuelRawMaterial(), quantity: 50);
-        RawMaterialInventorySlot energyInventorySlot = new RawMaterialInventorySlot(rawMaterial: new EnergyRawMaterial(), quantity: 50);
-        RawMaterialInventorySlot chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 50);
-        RawMaterialInventorySlot radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 50);
+        List<RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
+        {
+            new RawMaterialInventorySlot(rawMaterial: new FuelRawMaterial(), quantity: 50),
+            new RawMaterialInventorySlot(rawMaterial: new MetalRawMaterial(), quantity: 100),
+            new RawMaterialInventorySlot(rawMaterial: new EnergyRawMaterial(), quantity: 50),
+            new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 50),
+            new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 50),
+        };
 
-        Inventory inventory = new Inventory(metalInventorySlot: metalInventorySlot, 
-            fuelInventorySlot: fuelInventorySlot, 
-            energyInventorySlot: energyInventorySlot,
-            chemicalInventorySlot: chemicalInventorySlot,
-            radioactiveInventorySlot: radioactiveInventorySlot);
+        List<MachineGunAmmoInventorySlot> machineGunSlots = new List<MachineGunAmmoInventorySlot>
+        {
+            new MachineGunAmmoInventorySlot(Amount: 0, AmmoReceipt: new MetalMachineGunAmmoReceipt()),
+        };
+
+        Inventory inventory = new Inventory(rawMaterialSlots, MachineGunInventorySlot: machineGunSlots);
         this.useCase = new InventoryUseCase(inventory: inventory);
     }
 
