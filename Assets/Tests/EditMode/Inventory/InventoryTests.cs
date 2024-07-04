@@ -21,7 +21,18 @@ public class InventoryTests
         chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 120);
         radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 247);
 
-        inventory = new Inventory(metalInventorySlot, fuelInventorySlot, energyInventorySlot, chemicalInventorySlot, radioactiveInventorySlot);
+        List<RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
+        {
+            metalInventorySlot,
+            fuelInventorySlot,
+            energyInventorySlot,
+            chemicalInventorySlot,
+            radioactiveInventorySlot
+        };
+
+        List<MachineGunAmmoInventorySlot> machineGunAmmoSlots = new List<MachineGunAmmoInventorySlot>();
+
+        inventory = new Inventory(rawMaterialSlots, machineGunAmmoSlots);
     }
 
     [Test]

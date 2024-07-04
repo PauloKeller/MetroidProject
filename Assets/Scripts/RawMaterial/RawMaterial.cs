@@ -29,4 +29,12 @@
             return this.rawMaterial.Description;
         }
     }
+
+    public virtual RawMaterialType Type
+    {
+        get
+        {
+            return this.rawMaterial.Type;
+        }
+    }
 }

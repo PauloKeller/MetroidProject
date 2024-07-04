@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -21,8 +22,12 @@ public class InventoryController : MonoBehaviour
             new MachineGunAmmoInventorySlot(Amount: 0, AmmoReceipt: new MetalMachineGunAmmoReceipt()),
         };
 
+        string dbUri = "URI=file:MyDatabase.sqlite";
+        RawMaterialInventoryRepository rawMaterialRepository = new RawMaterialInventoryRepository(databaseUri: dbUri);
         Inventory inventory = new Inventory(rawMaterialSlots, MachineGunInventorySlot: machineGunSlots);
-        this.useCase = new InventoryUseCase(inventory: inventory);
+        this.useCase = new InventoryUseCase(inventory: inventory, rawMaterialRepository: rawMaterialRepository);
+
+        this.useCase.GetRawMaterialQuantity(new EnergyRawMaterial());
     }
 
     public void OnPutMaterial()

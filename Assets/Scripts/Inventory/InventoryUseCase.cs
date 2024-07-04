@@ -3,15 +3,19 @@
 public interface IInventoryUseCase 
 {
     public void UpdateRawMaterialQuantity(IRawMaterial rawMaterial, int amount);
+    public void GetRawMaterialQuantity(IRawMaterial rawMaterial);
 }
 
 public class InventoryUseCase: IInventoryUseCase
 {
-    private Inventory inventory;
+    IRawMaterialInventoryRepository rawMaterialRepository;
+    string dbUri = "URI=file:MyDatabase.sqlite";
+    Inventory inventory;
 
-    public InventoryUseCase(Inventory inventory)
+    public InventoryUseCase(Inventory inventory, IRawMaterialInventoryRepository rawMaterialRepository)
     {
         this.inventory = inventory;
+        this.rawMaterialRepository = rawMaterialRepository;
     }
 
     public void UpdateRawMaterialQuantity(IRawMaterial rawMaterial, int amount)
@@ -34,8 +38,16 @@ public class InventoryUseCase: IInventoryUseCase
 
                 Debug.Log($"Updating {rawMaterial} with {newQuantity}");
 
+                rawMaterialRepository.Update(updatedInventorySlot);
+
                 inventory.RawMaterialInventorySlots[index] = updatedInventorySlot;
             }
         }
+    }
+
+    public void GetRawMaterialQuantity(IRawMaterial rawMaterial) 
+    {
+        var rawMaterialSlot = rawMaterialRepository.FindByType((int)rawMaterial.Type);
+        Debug.Log($"Raw material found {rawMaterialSlot.rawMaterial}, quantity: {rawMaterialSlot.quantity}");
     }
 }

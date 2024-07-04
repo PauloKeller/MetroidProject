@@ -23,4 +23,12 @@
             return "";
         }
     }
+
+    public RawMaterialType Type
+    {
+        get
+        {
+            return RawMaterialType.Fuel;
+        }
+    }
 }

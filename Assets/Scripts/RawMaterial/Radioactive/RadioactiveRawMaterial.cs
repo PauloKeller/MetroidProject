@@ -24,4 +24,12 @@
             return "Iron ores are rocks and minerals from which metallic iron can be economically extracted.";
         }
     }
+
+    public RawMaterialType Type
+    {
+        get
+        {
+            return RawMaterialType.Radioactive;
+        }
+    }
 }
