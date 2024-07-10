@@ -1,4 +1,6 @@
-﻿public abstract class MachineGunAmmoReceipt : IReceipt
+﻿using System.Collections.Generic;
+
+public abstract class MachineGunAmmoReceipt : IReceipt
 {
     protected IReceipt receipt;
 
@@ -10,7 +12,6 @@
     public MachineGunAmmoReceipt()
     { 
     }
-
     public virtual int MetalMaterialAmount
     {
         get

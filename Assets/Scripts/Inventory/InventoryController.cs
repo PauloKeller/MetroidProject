@@ -22,12 +22,20 @@ public class InventoryController : MonoBehaviour
             new MachineGunAmmoInventorySlot(Amount: 0, AmmoReceipt: new MetalMachineGunAmmoReceipt()),
         };
 
-        string dbUri = "URI=file:MyDatabase.sqlite";
-        RawMaterialInventoryRepository rawMaterialRepository = new RawMaterialInventoryRepository(databaseUri: dbUri);
+        RawMaterialRepository rawMaterialRepository = new RawMaterialRepository();
         Inventory inventory = new Inventory(rawMaterialSlots, MachineGunInventorySlot: machineGunSlots);
         this.useCase = new InventoryUseCase(inventory: inventory, rawMaterialRepository: rawMaterialRepository);
 
-        this.useCase.GetRawMaterialQuantity(new EnergyRawMaterial());
+        UpdateMaterials();
+    }
+
+    public void UpdateMaterials() 
+    {
+        useCase.UpdateRawMaterialQuantity(new MetalRawMaterial(), 100);
+        useCase.UpdateRawMaterialQuantity(new FuelRawMaterial(), 100);
+        useCase.UpdateRawMaterialQuantity(new ChemicalRawMaterial(), 100);
+        useCase.UpdateRawMaterialQuantity(new EnergyRawMaterial(), 100);
+        useCase.UpdateRawMaterialQuantity(new RadioactiveRawMaterial(), 100);
     }
 
     public void OnPutMaterial()

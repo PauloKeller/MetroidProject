@@ -23,6 +23,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1dde7257a7642ff46ab9afd71fb871a5
+    m_Address: Assets/Settings/Localization/Tables/CraftMenuScene Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: a437244f7df8f4f438a11f012d0c6ccd, type: 2}
   m_SchemaSet:
