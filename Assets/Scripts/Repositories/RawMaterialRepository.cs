@@ -1,23 +1,21 @@
-﻿using Codice.CM.Common.Selectors;
-using Mono.Data.Sqlite;
-using System;
+﻿using Mono.Data.Sqlite;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using UnityEngine;
 
-public interface IRawMaterialRepository 
+public interface IRawMaterialRepository
 {
     public void Update(RawMaterialInventorySlot rawMaterialInventorySlot);
-    public RawMaterialInventorySlot? FindByType(int type);
-    public List<RawMaterialStack> FindAll();
+    public ResourceStack FindByType(int type);
+    public List<ResourceStack> FindAll();
 }
 
-public class RawMaterialRepository: IRawMaterialRepository
+public class RawMaterialRepository : IRawMaterialRepository
 {
     IDbConnection databaseConnection;
 
-    public RawMaterialRepository() 
+    public RawMaterialRepository()
     {
         string databaseUri = "URI=file:MyDatabase.sqlite";
         databaseConnection = new SqliteConnection(databaseUri);
@@ -29,7 +27,7 @@ public class RawMaterialRepository: IRawMaterialRepository
         databaseConnection.Close();
     }
 
-    public void Update(RawMaterialInventorySlot rawMaterialInventorySlot) 
+    public void Update(RawMaterialInventorySlot rawMaterialInventorySlot)
     {
         databaseConnection.Open();
         IDbCommand databaseCommand = databaseConnection.CreateCommand();
@@ -39,9 +37,9 @@ public class RawMaterialRepository: IRawMaterialRepository
         databaseConnection.Close();
     }
 
-    public RawMaterialInventorySlot? FindByType(int type)
+    public ResourceStack FindByType(int type)
     {
-        RawMaterialInventorySlot item = null;
+        ResourceStack item = new ResourceStack();
         databaseConnection.Open();
         IDbCommand databaseCommand = databaseConnection.CreateCommand();
         databaseCommand.CommandText = $"SELECT * FROM RawMaterial WHERE id = {type}";
@@ -49,33 +47,33 @@ public class RawMaterialRepository: IRawMaterialRepository
         while (dataReader.Read())
         {
             int readerId = dataReader.GetInt32(0);
-            RawMaterialType readerType = (RawMaterialType)dataReader.GetInt32(1);
-            int readerQuantity = dataReader.GetInt32(2);
+            ResourceType readerType = (ResourceType)dataReader.GetInt32(1);
+            int readerAmount = dataReader.GetInt32(2);
 
-            item = new RawMaterialInventorySlot(type: readerType, quantity: readerQuantity);
-            Debug.Log($"find item: {(item.rawMaterial)}, with quantity {item.quantity}");
+            item = new ResourceStack(type: readerType, amount: readerAmount);
+            Debug.Log($"find item: {(item.rawMaterial.GetType())}, with amount {item.amount}");
         }
 
         databaseConnection.Close();
         return item;
     }
 
-    public List<RawMaterialStack> FindAll() 
+    public List<ResourceStack> FindAll()
     {
-        List<RawMaterialStack> items = new List<RawMaterialStack>();
+        List<ResourceStack> items = new List<ResourceStack>();
         databaseConnection.Open();
         IDbCommand databaseCommand = databaseConnection.CreateCommand();
         databaseCommand.CommandText = $"SELECT * FROM RawMaterial";
         IDataReader dataReader = databaseCommand.ExecuteReader();
-        
+
         while (dataReader.Read())
         {
             int readerId = dataReader.GetInt32(0);
-            RawMaterialType readerType = (RawMaterialType)dataReader.GetInt32(1);
-            int readerQuantity = dataReader.GetInt32(2);
+            ResourceType readerType = (ResourceType)dataReader.GetInt32(1);
+            int readerAmount = dataReader.GetInt32(2);
 
-            RawMaterialStack item = new RawMaterialStack(amount: readerQuantity, rawMaterialType: readerType);
-            Debug.Log($"find item: {(item.rawMaterial)}, with amount {item.amount}");
+            ResourceStack item = new ResourceStack(type: readerType, amount: readerAmount);
+            Debug.Log($"find item: {item.GetType()}, with amount {item.amount}");
             items.Append(item);
         }
 

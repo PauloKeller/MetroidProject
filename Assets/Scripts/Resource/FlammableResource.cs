@@ -1,16 +1,16 @@
-﻿public class ChemicalRawMaterial : IRawMaterial
+﻿public struct FlammableResource: IResource
 {
     public float Weight
     {
-        get
+        get 
         {
-            return 7f;
+            return 1f;
         }
     }
 
     public int MaxStack
     {
-        get
+        get 
         {
             return 9999;
         }
@@ -24,11 +24,11 @@
         }
     }
 
-    public RawMaterialType Type
+    public ResourceType Type
     {
         get
         {
-            return RawMaterialType.Chemical;
+            return ResourceType.Fuel;
         }
     }
 }

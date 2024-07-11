@@ -1,6 +1,6 @@
-public class FlameBullet : Projectile
+public class FlameBullet : Bullet
 {
-    public FlameBullet(IProjectile projectile) : base(projectile)
+    public FlameBullet(IBullet bullet) : base(bullet)
     {
     }
 
@@ -9,14 +9,6 @@ public class FlameBullet : Projectile
         get 
         {
             return base.Damage + 10;
-        }
-    }
-
-    public override ProjectileType ProjectileType
-    {
-        get
-        {
-            return ProjectileType.Flammable;
         }
     }
 }

@@ -3,12 +3,12 @@
 [TestFixture]
 public class EnergyRawMaterialTests
 {
-    private EnergyRawMaterial energyRawMaterial;
+    private EnergyResource energyRawMaterial;
 
     [SetUp]
     public void SetUp()
     {
-        energyRawMaterial = new EnergyRawMaterial();
+        energyRawMaterial = new EnergyResource();
     }
 
     [Test]

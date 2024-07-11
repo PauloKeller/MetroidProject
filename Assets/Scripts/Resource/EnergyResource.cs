@@ -1,4 +1,4 @@
-﻿public class EnergyRawMaterial : IRawMaterial
+﻿public struct EnergyResource: IResource
 {
     public float Weight
     {
@@ -24,11 +24,11 @@
         }
     }
 
-    public RawMaterialType Type
+    public ResourceType Type
     {
         get
         {
-            return RawMaterialType.Energy;
+            return ResourceType.Energy;
         }
     }
 }

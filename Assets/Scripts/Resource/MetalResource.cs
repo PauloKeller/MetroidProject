@@ -1,4 +1,4 @@
-﻿public class MetalRawMaterial : IRawMaterial
+﻿public struct MetalResource: IResource
 {
     public float Weight
     {
@@ -7,7 +7,6 @@
             return 1.5f;
         }
     }
-
     public int MaxStack
     {
         get 
@@ -15,7 +14,6 @@
             return 9999;
         }
     }
-
     // TODO: Should point to the translation table id
     public string Description
     {
@@ -24,12 +22,11 @@
             return "Iron ores are rocks and minerals from which metallic iron can be economically extracted.";
         }
     }
-
-    public RawMaterialType Type
+    public ResourceType Type
     {
         get
         {
-            return RawMaterialType.Metal;
+            return ResourceType.Metal;
         }
     }
 }

@@ -1,34 +1,23 @@
-public class Bullet : IProjectile
+﻿public abstract class Bullet: IBullet
 {
+    protected IBullet receipt;
+
+    public Bullet(IBullet receipt)
+    {
+        this.receipt = receipt;
+    }
+
     public virtual int Damage
-    {
-        get 
-        {
-            return 10;
+    { 
+        get { 
+            return receipt.Damage; 
         }
     }
 
-    public float Speed 
+    public virtual float Speed
     {
-        get 
-        {
-            return 12f;
-        }
-    }
-
-    public bool IsPiercing 
-    {
-        get 
-        {
-            return false;
-        }
-    }
-
-    public ProjectileType ProjectileType
-    {
-        get 
-        {
-            return ProjectileType.Metal;
+        get { 
+            return receipt.Speed; 
         }
     }
 }

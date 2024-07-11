@@ -15,11 +15,11 @@ public class InventoryTests
     [SetUp]
     public void SetUp()
     {
-        metalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new MetalRawMaterial(), quantity: 700);
-        fuelInventorySlot = new RawMaterialInventorySlot(rawMaterial: new FuelRawMaterial(), quantity: 500);
-        energyInventorySlot = new RawMaterialInventorySlot(rawMaterial: new EnergyRawMaterial(), quantity: 330);
-        chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 120);
-        radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 247);
+        metalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new MetalResource(), quantity: 700);
+        fuelInventorySlot = new RawMaterialInventorySlot(rawMaterial: new FlammableResource(), quantity: 500);
+        energyInventorySlot = new RawMaterialInventorySlot(rawMaterial: new EnergyResource(), quantity: 330);
+        chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalResource(), quantity: 120);
+        radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new NuclearResource(), quantity: 247);
 
         List<RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
         {
@@ -61,11 +61,11 @@ public class InventoryTests
         // Arrange
         var newSlots = new List<RawMaterialInventorySlot>
         {
-            new RawMaterialInventorySlot(rawMaterial: new MetalRawMaterial(), quantity: 700),
-            new RawMaterialInventorySlot(rawMaterial: new FuelRawMaterial(), quantity: 500),
-            new RawMaterialInventorySlot(rawMaterial: new EnergyRawMaterial(), quantity: 33),
-            new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 120),
-            new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 247),
+            new RawMaterialInventorySlot(rawMaterial: new MetalResource(), quantity: 700),
+            new RawMaterialInventorySlot(rawMaterial: new FlammableResource(), quantity: 500),
+            new RawMaterialInventorySlot(rawMaterial: new EnergyResource(), quantity: 33),
+            new RawMaterialInventorySlot(rawMaterial: new ChemicalResource(), quantity: 120),
+            new RawMaterialInventorySlot(rawMaterial: new NuclearResource(), quantity: 247),
         };
 
         // Act

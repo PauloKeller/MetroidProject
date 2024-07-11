@@ -3,12 +3,12 @@
 [TestFixture]
 public class MetalRawMaterialTests
 {
-    private MetalRawMaterial metalRawMaterial;
+    private MetalResource metalRawMaterial;
 
     [SetUp]
     public void SetUp()
     {
-        metalRawMaterial = new MetalRawMaterial();
+        metalRawMaterial = new MetalResource();
     }
 
     [Test]

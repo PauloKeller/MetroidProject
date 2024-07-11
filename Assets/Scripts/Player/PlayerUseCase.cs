@@ -17,9 +17,9 @@ public class PlayerUseCase : IPlayerUseCaseInterface
        new HandCannon(weapon: new Cannon())
     };
 
-    private IProjectile[] machineGunProjectiles = {
-        new Bullet(),
-        new FlameBullet(new Bullet()),
+    private Bullet[] machineGunProjectiles = {
+        new MetallicBullet(new BaseBullet()),
+        new FlameBullet(new MetallicBullet(new BaseBullet())),
     };
 
     private IProjectile[] flamethrowerProjectiles = {
@@ -76,13 +76,13 @@ public class PlayerUseCase : IPlayerUseCaseInterface
         return this.EquipedWeapon;
     }
 
-    private IProjectile GetMachineGunAmmunition(ProjectileType projectileType) 
+    private Bullet GetMachineGunAmmunition(Bullet bullet) 
     {
         foreach (var item in machineGunProjectiles)
         {
-            if (item.ProjectileType == projectileType) 
+            if (item == bullet) 
             {
-                return item;
+                return bullet;
             }
         }
 
@@ -133,10 +133,10 @@ public class PlayerUseCase : IPlayerUseCaseInterface
         switch (this.EquipedWeapon.WeaponType)
         {
             case WeaponType.MachineGun:
-                if (GetMachineGunAmmunition(projectileType: projectileType) is var mgAmmo && mgAmmo != null)
+                if (GetMachineGunAmmunition(bullet: new MetallicBullet(new BaseBullet())) is var mgAmmo && mgAmmo != null)
                 {
                     Debug.Log($"Changed ammo {mgAmmo}");
-                    this.EquipedWeapon.CurrentProjectile = mgAmmo;
+                    //this.EquipedWeapon.CurrentProjectile = mgAmmo;
                 }
                 break;
             case WeaponType.Flamethrower:

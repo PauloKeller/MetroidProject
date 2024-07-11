@@ -1,4 +1,4 @@
-﻿public class RadioactiveRawMaterial : IRawMaterial
+﻿public struct NuclearResource: IResource
 {
     public float Weight
     {
@@ -25,11 +25,11 @@
         }
     }
 
-    public RawMaterialType Type
+    public ResourceType Type
     {
         get
         {
-            return RawMaterialType.Radioactive;
+            return ResourceType.Radioactive;
         }
     }
 }

@@ -15,11 +15,11 @@ public class InventoryUseCaseTests
     [SetUp]
     public void SetUp()
     {
-        metalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new MetalRawMaterial(), quantity: 10);
-        fuelInventorySlot = new RawMaterialInventorySlot(rawMaterial: new FuelRawMaterial(), quantity: 500);
-        energyInventorySlot = new RawMaterialInventorySlot(rawMaterial: new EnergyRawMaterial(), quantity: 330);
-        chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 120);
-        radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 247);
+        metalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new MetalResource(), quantity: 10);
+        fuelInventorySlot = new RawMaterialInventorySlot(rawMaterial: new FlammableResource(), quantity: 500);
+        energyInventorySlot = new RawMaterialInventorySlot(rawMaterial: new EnergyResource(), quantity: 330);
+        chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalResource(), quantity: 120);
+        radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new NuclearResource(), quantity: 247);
 
         List <RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
         {
@@ -55,8 +55,8 @@ public class InventoryUseCaseTests
     public void UpdateRawMaterialQuantity_ShouldNotUpdateForDifferentRawMaterial()
     {
         // Arrange
-        var rawMaterial1 = new EnergyRawMaterial();
-        var rawMaterial2 = new ChemicalRawMaterial();
+        var rawMaterial1 = new EnergyResource();
+        var rawMaterial2 = new ChemicalResource();
         var slot1 = new RawMaterialInventorySlot(rawMaterial1, 10);
         var slot2 = new RawMaterialInventorySlot(rawMaterial2, 5);
         

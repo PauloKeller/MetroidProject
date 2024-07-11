@@ -1,4 +1,4 @@
-﻿public enum RawMaterialType 
+﻿public enum ResourceType 
 { 
     Metal,
     Fuel,

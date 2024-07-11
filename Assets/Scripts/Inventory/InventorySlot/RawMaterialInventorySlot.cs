@@ -3,34 +3,34 @@
 public class RawMaterialInventorySlot
 {
     // TODO: Pass a enum as type?
-    public IRawMaterial rawMaterial;
+    public IResource rawMaterial;
     public int quantity;
 
-    public RawMaterialInventorySlot(IRawMaterial rawMaterial, int quantity)
+    public RawMaterialInventorySlot(IResource rawMaterial, int quantity)
     {
         this.rawMaterial = rawMaterial;
         this.quantity = quantity;
     }
 
-    public RawMaterialInventorySlot(RawMaterialType type, int quantity) 
+    public RawMaterialInventorySlot(ResourceType type, int quantity) 
     { 
         this.quantity = quantity;
         switch (type) 
         { 
-            case RawMaterialType.Metal: 
-                this.rawMaterial = new MetalRawMaterial();
+            case ResourceType.Metal: 
+                this.rawMaterial = new MetalResource();
                 break;
-            case RawMaterialType.Chemical:
-                this.rawMaterial = new ChemicalRawMaterial();
+            case ResourceType.Chemical:
+                this.rawMaterial = new ChemicalResource();
                 break;
-            case RawMaterialType.Fuel:
-                this.rawMaterial = new FuelRawMaterial();
+            case ResourceType.Fuel:
+                this.rawMaterial = new FlammableResource();
                 break;
-            case RawMaterialType.Energy:
-                this.rawMaterial = new EnergyRawMaterial();
+            case ResourceType.Energy:
+                this.rawMaterial = new EnergyResource();
                 break;
-            case RawMaterialType.Radioactive:
-                this.rawMaterial = new RadioactiveRawMaterial();
+            case ResourceType.Radioactive:
+                this.rawMaterial = new NuclearResource();
                 break;
         }
     }

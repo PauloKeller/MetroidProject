@@ -3,12 +3,12 @@ using NUnit.Framework;
 [TestFixture]
 public class RadioactiveRawMaterialTests
 {
-    private RadioactiveRawMaterial radioactiveRawMaterial;
+    private NuclearResource radioactiveRawMaterial;
 
     [SetUp]
     public void SetUp()
     {
-        radioactiveRawMaterial = new RadioactiveRawMaterial();
+        radioactiveRawMaterial = new NuclearResource();
     }
 
     [Test]

@@ -1,79 +1,64 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-
-public struct RawMaterialStack 
-{
-    public int amount;
-    public IRawMaterial rawMaterial;
-
-    public RawMaterialStack(int amount, RawMaterialType rawMaterialType)
-    {
-        this.amount = amount;
-        switch (rawMaterialType)
-        {
-            case RawMaterialType.Metal:
-                this.rawMaterial = new MetalRawMaterial();
-                break;
-            case RawMaterialType.Chemical:
-                this.rawMaterial = new ChemicalRawMaterial();
-                break;
-            case RawMaterialType.Fuel:
-                this.rawMaterial = new FuelRawMaterial();
-                break;
-            case RawMaterialType.Energy:
-                this.rawMaterial = new EnergyRawMaterial();
-                break;
-            case RawMaterialType.Radioactive:
-                this.rawMaterial = new RadioactiveRawMaterial();
-                break;
-            default:
-                this.rawMaterial = new MetalRawMaterial();
-                break;
-        }
-    }
-}
 
 public class CraftUseCase
 {
     private IRawMaterialRepository rawMaterialRepository = new RawMaterialRepository();
-    private List<RawMaterialStack> storedRawMaterials = new List<RawMaterialStack>();
-    public CraftUseCase() 
+    private List<ResourceStack> storedRawMaterials = new List<ResourceStack>();
+    public CraftUseCase()
     {
         storedRawMaterials = rawMaterialRepository.FindAll();
     }
 
-    public void CraftBullet(int amount, MachineGunAmmoReceipt receipt)
+    public BulletAmmoStack CraftBullet(int amount, BulletReceipt receipt)
     {
-        // TODO: Should be part of material receipt
-        int metalRequired = receipt.MetalMaterialAmount * amount;
-        int fuelRequired = receipt.FuelMaterialAmount * amount;
-        int chemicalRequired = receipt.ChemicalMaterialAmount * amount;
-        int energyRequired = receipt.EnergyMaterialAmount * amount;
-        int radioactiveRequired = receipt.RadioactiveMaterialAmount * amount;
-
-        List<RawMaterialStack> requiredRawMaterials = new List<RawMaterialStack>();
-
-        if (HasEnoughMaterialsAmount(requiredRawMaterials: requiredRawMaterials,
-            storedRawMaterials: storedRawMaterials))
-        { 
-           // TODO: Update the repository
+        if (HasEnoughMaterialsAmount(storedRawMaterials: storedRawMaterials, receipt: receipt))
+        {
+            if (receipt is MetallicBulletReceipt)
+            {
+                Bullet bullet = new MetallicBullet(new BaseBullet());
+                BulletAmmoStack stack = new BulletAmmoStack(bullet: bullet, amount: amount);
+                return stack;
+            }
+            else if (receipt is FlammableBulletReceipt)
+            {
+                FlameBullet bullet = new FlameBullet(new MetallicBullet(new BaseBullet()));
+                BulletAmmoStack stack = new BulletAmmoStack(bullet: bullet, amount: amount);
+                return stack;
+            }
+            else 
+            {
+                throw new CraftMenuException(code: CraftMenuExceptionCode.NotAbleToCraftReceipt);
+            }
+        }
+        else 
+        {
+            throw new CraftMenuException(code: CraftMenuExceptionCode.NotEnoughMaterials);
         }
     }
 
-    bool HasEnoughMaterialsAmount(List<RawMaterialStack> requiredRawMaterials, 
-        List<RawMaterialStack> storedRawMaterials) 
+    private bool HasEnoughMaterialsAmount(List<ResourceStack> storedRawMaterials, IAmmoReceipt receipt) 
     {
-        foreach (RawMaterialStack storedMaterial in storedRawMaterials)
+        foreach (ResourceStack storedMaterial in storedRawMaterials)
         {
-            foreach (RawMaterialStack requiredRawMaterial in requiredRawMaterials)
+            if (storedMaterial.rawMaterial is MetalResource && storedMaterial.amount < receipt.MetalMaterialRequired)
             {
-                if (storedMaterial.rawMaterial == requiredRawMaterial.rawMaterial)
-                {
-                    if (requiredRawMaterial.amount > storedMaterial.amount)
-                    {
-                        return false;
-                    }
-                }
+                return false;
+            } 
+            else if (storedMaterial.rawMaterial is FlammableResource && storedMaterial.amount < receipt.FuelMaterialRequired) 
+            {
+                return false;
+            }
+            else if (storedMaterial.rawMaterial is ChemicalResource && storedMaterial.amount < receipt.ChemicalMaterialRequired)
+            {
+                return false;
+            }
+            else if (storedMaterial.rawMaterial is EnergyResource && storedMaterial.amount < receipt.EnergyMaterialRequired)
+            {
+                return false;
+            }
+            else if (storedMaterial.rawMaterial is NuclearResource && storedMaterial.amount < receipt.RadioactiveMaterialRequired)
+            {
+                return false;
             }
         }
 

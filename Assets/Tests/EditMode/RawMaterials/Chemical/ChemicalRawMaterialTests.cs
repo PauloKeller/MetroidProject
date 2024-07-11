@@ -3,12 +3,12 @@
 [TestFixture]
 public class ChemicalRawMaterialTests
 {
-    private ChemicalRawMaterial chemicalRawMaterial;
+    private ChemicalResource chemicalRawMaterial;
 
     [SetUp]
     public void SetUp()
     {
-        chemicalRawMaterial = new ChemicalRawMaterial();
+        chemicalRawMaterial = new ChemicalResource();
     }
 
     [Test]

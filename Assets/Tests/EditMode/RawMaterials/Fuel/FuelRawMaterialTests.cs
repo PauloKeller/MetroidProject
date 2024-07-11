@@ -3,12 +3,12 @@
 [TestFixture]
 public class FuelRawMaterialTests
 {
-    private FuelRawMaterial fuelRawMaterial;
+    private FlammableResource fuelRawMaterial;
 
     [SetUp]
     public void SetUp()
     {
-        fuelRawMaterial = new FuelRawMaterial();
+        fuelRawMaterial = new FlammableResource();
     }
 
     [Test]
