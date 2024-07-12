@@ -1,24 +1,24 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 
 [TestFixture]
-public class MetalRawMaterialTests
+public class NuclearResourceTests
 {
-    private MetalResource metalRawMaterial;
+    private NuclearResource nuclearResource;
 
     [SetUp]
     public void SetUp()
     {
-        metalRawMaterial = new MetalResource();
+        nuclearResource = new NuclearResource();
     }
 
     [Test]
     public void Weight_ShouldReturnExpectedValue()
     {
         // Arrange
-        float expectedWeight = 1.5f;
+        float expectedWeight = 10f;
 
         // Act
-        float actualWeight = metalRawMaterial.Weight;
+        float actualWeight = nuclearResource.Weight;
 
         // Assert
         Assert.AreEqual(expectedWeight, actualWeight);
@@ -31,7 +31,7 @@ public class MetalRawMaterialTests
         int expectedMaxStack = 9999;
 
         // Act
-        int actualMaxStack = metalRawMaterial.MaxStack;
+        int actualMaxStack = nuclearResource.MaxStack;
 
         // Assert
         Assert.AreEqual(expectedMaxStack, actualMaxStack);
@@ -44,7 +44,7 @@ public class MetalRawMaterialTests
         string expectedDescription = "Iron ores are rocks and minerals from which metallic iron can be economically extracted.";
 
         // Act
-        string actualDescription = metalRawMaterial.Description;
+        string actualDescription = nuclearResource.Description;
 
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);

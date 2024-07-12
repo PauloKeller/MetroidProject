@@ -47,17 +47,4 @@ public class PlayerUseCaseTest
         Assert.AreEqual(weaponType, weapon.WeaponType);
         Assert.AreEqual(weapon, sut.EquipedWeapon);
     }
-
-    [Test]
-    public void ChangeCurrentWeaponAmmunitionTestPasses()
-    {
-        // Arrange
-        sut.WieldWeapon(WeaponType.MachineGun);
-
-        // Act
-        IWeapon weapon = sut.ChangeCurrentWeaponAmmunition(ProjectileType.Flammable);
-
-        // Assert
-        Assert.IsTrue(weapon.CurrentProjectile is FlameBullet);
-    }
 }

@@ -4,7 +4,7 @@ public class MachineGun : IWeapon
 
     public MachineGun() 
     {
-        this.currentAmmunition = new MetallicBullet(new BaseBullet());
+        this.currentAmmunition = new MetalBullet(new BaseBullet());
     }
 
     public float Weight

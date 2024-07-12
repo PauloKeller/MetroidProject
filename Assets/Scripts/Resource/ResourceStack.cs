@@ -1,7 +1,7 @@
 ﻿public struct ResourceStack
 {
     public int amount;
-    public IResource rawMaterial;
+    public IResource resource;
 
     public ResourceStack(ResourceType type, int amount)
     {
@@ -9,23 +9,31 @@
         switch (type)
         {
             case ResourceType.Metal:
-                this.rawMaterial = new MetalResource();
+                this.resource = new MetalResource();
                 break;
             case ResourceType.Chemical:
-                this.rawMaterial = new ChemicalResource();
+                this.resource = new ChemicalResource();
                 break;
             case ResourceType.Fuel:
-                this.rawMaterial = new FlammableResource();
+                this.resource = new FlammableResource();
                 break;
             case ResourceType.Energy:
-                this.rawMaterial = new EnergyResource();
+                this.resource = new EnergyResource();
                 break;
             case ResourceType.Radioactive:
-                this.rawMaterial = new NuclearResource();
+                this.resource = new NuclearResource();
                 break;
             default:
-                this.rawMaterial = new MetalResource();
+                this.resource = new MetalResource();
                 break;
         }
     }
+
+    public ResourceStack(IResource resource, int amount)
+    {
+        this.resource = resource;
+        this.amount = amount;
+    }
 }
+
+    

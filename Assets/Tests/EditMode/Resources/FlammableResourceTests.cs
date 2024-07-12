@@ -1,24 +1,24 @@
 ﻿using NUnit.Framework;
 
 [TestFixture]
-public class ChemicalRawMaterialTests
+public class FlammableResourceTests
 {
-    private ChemicalResource chemicalRawMaterial;
+    private FlammableResource flammableResource;
 
     [SetUp]
     public void SetUp()
     {
-        chemicalRawMaterial = new ChemicalResource();
+        flammableResource = new FlammableResource();
     }
 
     [Test]
     public void Weight_ShouldReturnExpectedValue()
     {
         // Arrange
-        float expectedWeight = 7f;
+        float expectedWeight = 1f;
 
         // Act
-        float actualWeight = chemicalRawMaterial.Weight;
+        float actualWeight = flammableResource.Weight;
 
         // Assert
         Assert.AreEqual(expectedWeight, actualWeight);
@@ -31,7 +31,7 @@ public class ChemicalRawMaterialTests
         int expectedMaxStack = 9999;
 
         // Act
-        int actualMaxStack = chemicalRawMaterial.MaxStack;
+        int actualMaxStack = flammableResource.MaxStack;
 
         // Assert
         Assert.AreEqual(expectedMaxStack, actualMaxStack);
@@ -44,7 +44,7 @@ public class ChemicalRawMaterialTests
         string expectedDescription = "";
 
         // Act
-        string actualDescription = chemicalRawMaterial.Description;
+        string actualDescription = flammableResource.Description;
 
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);

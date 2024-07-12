@@ -18,8 +18,8 @@ public class PlayerUseCase : IPlayerUseCaseInterface
     };
 
     private Bullet[] machineGunProjectiles = {
-        new MetallicBullet(new BaseBullet()),
-        new FlameBullet(new MetallicBullet(new BaseBullet())),
+        new MetalBullet(new BaseBullet()),
+        new FlameBullet(new MetalBullet(new BaseBullet())),
     };
 
     private IProjectile[] flamethrowerProjectiles = {
@@ -133,7 +133,7 @@ public class PlayerUseCase : IPlayerUseCaseInterface
         switch (this.EquipedWeapon.WeaponType)
         {
             case WeaponType.MachineGun:
-                if (GetMachineGunAmmunition(bullet: new MetallicBullet(new BaseBullet())) is var mgAmmo && mgAmmo != null)
+                if (GetMachineGunAmmunition(bullet: new MetalBullet(new BaseBullet())) is var mgAmmo && mgAmmo != null)
                 {
                     Debug.Log($"Changed ammo {mgAmmo}");
                     //this.EquipedWeapon.CurrentProjectile = mgAmmo;

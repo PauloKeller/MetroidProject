@@ -1,27 +1,78 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class CraftUseCase
 {
     private IRawMaterialRepository rawMaterialRepository = new RawMaterialRepository();
-    private List<ResourceStack> storedRawMaterials = new List<ResourceStack>();
+    private List<ResourceStack> resources = new List<ResourceStack>();
     public CraftUseCase()
     {
-        storedRawMaterials = rawMaterialRepository.FindAll();
+        resources = rawMaterialRepository.FindAll();
+    }
+
+    public List<ResourceStack> Resources {
+        get
+        { 
+            return rawMaterialRepository.FindAll();
+        }
+    }
+
+    public ResourceStack MetalStack 
+    {
+        get 
+        {
+            return resources.Find(resource => resource.resource is MetalResource);
+        }
+    }
+
+    public ResourceStack FlammableStack
+    {
+        get
+        {
+            return resources.Find(resource => resource.resource is FlammableResource);
+        }
+    }
+
+    public ResourceStack ChemicalbleStack
+    {
+        get
+        {
+            return resources.Find(resource => resource.resource is ChemicalResource);
+        }
+    }
+
+    public ResourceStack EnergyStack
+    {
+        get
+        {
+            return resources.Find(resource => resource.resource is EnergyResource);
+        }
+    }
+
+    public ResourceStack NuclearStack
+    {
+        get
+        {
+            return resources.Find(resource => resource.resource is NuclearResource);
+        }
     }
 
     public BulletAmmoStack CraftBullet(int amount, BulletReceipt receipt)
     {
-        if (HasEnoughMaterialsAmount(storedRawMaterials: storedRawMaterials, receipt: receipt))
+        resources = rawMaterialRepository.FindAll();
+
+        if (HasEnoughMaterialsAmount(receipt: receipt, amount: amount))
         {
-            if (receipt is MetallicBulletReceipt)
+            if (receipt is MetalBulletReceipt)
             {
-                Bullet bullet = new MetallicBullet(new BaseBullet());
+                Bullet bullet = new MetalBullet(new BaseBullet());
                 BulletAmmoStack stack = new BulletAmmoStack(bullet: bullet, amount: amount);
                 return stack;
             }
             else if (receipt is FlammableBulletReceipt)
             {
-                FlameBullet bullet = new FlameBullet(new MetallicBullet(new BaseBullet()));
+                FlameBullet bullet = new FlameBullet(new MetalBullet(new BaseBullet()));
                 BulletAmmoStack stack = new BulletAmmoStack(bullet: bullet, amount: amount);
                 return stack;
             }
@@ -36,30 +87,27 @@ public class CraftUseCase
         }
     }
 
-    private bool HasEnoughMaterialsAmount(List<ResourceStack> storedRawMaterials, IAmmoReceipt receipt) 
+    private bool HasEnoughMaterialsAmount(IAmmoReceipt receipt, int amount) 
     {
-        foreach (ResourceStack storedMaterial in storedRawMaterials)
+        if (MetalStack.amount < (receipt.MetalMaterialRequired * amount))
         {
-            if (storedMaterial.rawMaterial is MetalResource && storedMaterial.amount < receipt.MetalMaterialRequired)
-            {
-                return false;
-            } 
-            else if (storedMaterial.rawMaterial is FlammableResource && storedMaterial.amount < receipt.FuelMaterialRequired) 
-            {
-                return false;
-            }
-            else if (storedMaterial.rawMaterial is ChemicalResource && storedMaterial.amount < receipt.ChemicalMaterialRequired)
-            {
-                return false;
-            }
-            else if (storedMaterial.rawMaterial is EnergyResource && storedMaterial.amount < receipt.EnergyMaterialRequired)
-            {
-                return false;
-            }
-            else if (storedMaterial.rawMaterial is NuclearResource && storedMaterial.amount < receipt.RadioactiveMaterialRequired)
-            {
-                return false;
-            }
+            return false;
+        }
+        else if (FlammableStack.amount < (receipt.FuelMaterialRequired * amount))
+        {
+            return false;
+        }
+        else if (ChemicalbleStack.amount < (receipt.ChemicalMaterialRequired * amount))
+        {
+            return false;
+        }
+        else if (EnergyStack.amount < (receipt.EnergyMaterialRequired * amount))
+        {
+            return false;
+        }
+        else if (NuclearStack.amount < (receipt.RadioactiveMaterialRequired * amount))
+        {
+            return false;
         }
 
         return true;

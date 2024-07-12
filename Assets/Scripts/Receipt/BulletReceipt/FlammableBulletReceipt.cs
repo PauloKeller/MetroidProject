@@ -18,4 +18,12 @@
             return base.FuelMaterialRequired + 2;
         }
     }
+
+    public override string Name
+    {
+        get
+        {
+            return "Flame Bullet";
+        }
+    }
 }

@@ -38,4 +38,12 @@
             return 0;
         }
     }
+
+    public string Name
+    {
+        get 
+        {
+            return "Ammo Receipt Name";
+        }
+    }
 }

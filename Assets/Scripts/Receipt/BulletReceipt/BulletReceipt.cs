@@ -46,4 +46,12 @@
             return receipt.RadioactiveMaterialRequired;
         }
     }
+
+    public virtual string Name
+    {
+        get
+        {
+            return receipt.Name;
+        }
+    }
 }

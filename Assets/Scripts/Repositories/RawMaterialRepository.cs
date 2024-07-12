@@ -51,7 +51,6 @@ public class RawMaterialRepository : IRawMaterialRepository
             int readerAmount = dataReader.GetInt32(2);
 
             item = new ResourceStack(type: readerType, amount: readerAmount);
-            Debug.Log($"find item: {(item.rawMaterial.GetType())}, with amount {item.amount}");
         }
 
         databaseConnection.Close();
@@ -73,8 +72,7 @@ public class RawMaterialRepository : IRawMaterialRepository
             int readerAmount = dataReader.GetInt32(2);
 
             ResourceStack item = new ResourceStack(type: readerType, amount: readerAmount);
-            Debug.Log($"find item: {item.GetType()}, with amount {item.amount}");
-            items.Append(item);
+            items.Add(item);
         }
 
         databaseConnection.Close();
