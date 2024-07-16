@@ -1,16 +1,16 @@
-﻿public abstract class BulletReceipt : IAmmoReceipt
+﻿public abstract class CellReceipt : IAmmoReceipt
 {
     protected IAmmoReceipt receipt;
 
-    public BulletReceipt(IAmmoReceipt receipt)
+    public CellReceipt(IAmmoReceipt receipt)
     {
         this.receipt = receipt;
     }
 
     public virtual int MetalResourceRequired
     {
-        get 
-        { 
+        get
+        {
             return receipt.MetalResourceRequired;
         }
     }

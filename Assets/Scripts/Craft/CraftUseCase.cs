@@ -89,19 +89,19 @@ public class CraftUseCase
 
     private bool HasEnoughMaterialsAmount(IAmmoReceipt receipt, int amount) 
     {
-        if (MetalStack.amount < (receipt.MetalMaterialRequired * amount))
+        if (MetalStack.amount < (receipt.MetalResourceRequired * amount))
         {
             return false;
         }
-        else if (FlammableStack.amount < (receipt.FuelMaterialRequired * amount))
+        else if (FlammableStack.amount < (receipt.FlammableResourceRequired * amount))
         {
             return false;
         }
-        else if (ChemicalbleStack.amount < (receipt.ChemicalMaterialRequired * amount))
+        else if (ChemicalbleStack.amount < (receipt.ChemicalResourceRequired * amount))
         {
             return false;
         }
-        else if (EnergyStack.amount < (receipt.EnergyMaterialRequired * amount))
+        else if (EnergyStack.amount < (receipt.EnergyResourceRequired * amount))
         {
             return false;
         }

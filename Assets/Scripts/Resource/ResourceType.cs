@@ -2,6 +2,7 @@
 { 
     Metal,
     Fuel,
+    Cryogenic,
     Chemical,
     Energy,
     Radioactive

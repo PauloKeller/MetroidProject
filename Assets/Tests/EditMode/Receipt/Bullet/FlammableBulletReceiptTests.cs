@@ -16,7 +16,7 @@ public class FlammableBulletReceiptTests
     public void MetalMaterialRequired_ShouldReturnBaseValuePlusOne()
     {
         // Act
-        int result = flammableBulletReceipt.MetalMaterialRequired;
+        int result = flammableBulletReceipt.MetalResourceRequired;
 
         // Assert
         Assert.AreEqual(2, result);
@@ -26,7 +26,7 @@ public class FlammableBulletReceiptTests
     public void FuelMaterialRequired_ShouldReturnBaseValuePlusTwo()
     {
         // Act
-        int result = flammableBulletReceipt.FuelMaterialRequired;
+        int result = flammableBulletReceipt.FlammableResourceRequired;
 
         // Assert
         Assert.AreEqual(2, result);

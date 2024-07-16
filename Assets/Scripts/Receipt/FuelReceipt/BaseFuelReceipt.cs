@@ -1,10 +1,10 @@
-﻿public class BaseBulletReceipt : IAmmoReceipt
+﻿public class BaseFuelReceipt : IAmmoReceipt
 {
     public int MetalResourceRequired
     {
         get
         {
-            return 1;
+            return 0;
         }
     }
 
@@ -27,7 +27,7 @@
     {
         get
         {
-            return 0;
+            return 2;
         }
     }
 
@@ -49,7 +49,7 @@
 
     public string Name
     {
-        get 
+        get
         {
             return "Ammo Receipt Name";
         }

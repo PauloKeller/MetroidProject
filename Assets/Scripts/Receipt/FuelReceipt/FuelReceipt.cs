@@ -7,35 +7,43 @@
         this.receipt = receipt;
     }
 
-    public virtual int MetalMaterialRequired
+    public virtual int MetalResourceRequired
     {
         get
         {
-            return receipt.MetalMaterialRequired;
+            return receipt.MetalResourceRequired;
         }
     }
 
-    public virtual int ChemicalMaterialRequired
+    public virtual int ChemicalResourceRequired
     {
         get
         {
-            return receipt.ChemicalMaterialRequired;
+            return receipt.ChemicalResourceRequired;
         }
     }
 
-    public virtual int EnergyMaterialRequired
+    public virtual int EnergyResourceRequired
     {
         get
         {
-            return receipt.EnergyMaterialRequired;
+            return receipt.EnergyResourceRequired;
         }
     }
 
-    public virtual int FuelMaterialRequired
+    public virtual int FlammableResourceRequired
     {
         get
         {
-            return receipt.FuelMaterialRequired;
+            return receipt.FlammableResourceRequired;
+        }
+    }
+
+    public virtual int CryogenicResourceRequired
+    {
+        get
+        {
+            return receipt.CryogenicResourceRequired;
         }
     }
 
@@ -47,7 +55,7 @@
         }
     }
 
-    public string Name
+    public virtual string Name
     {
         get
         {

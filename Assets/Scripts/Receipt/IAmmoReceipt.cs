@@ -1,9 +1,10 @@
 ﻿public interface IAmmoReceipt
 {
     string Name { get; }
-    int MetalMaterialRequired { get; }
-    int ChemicalMaterialRequired { get; }
-    int EnergyMaterialRequired { get; }
-    int FuelMaterialRequired { get; }
+    int MetalResourceRequired { get; }
+    int FlammableResourceRequired { get; }
+    int CryogenicResourceRequired { get; }
+    int ChemicalResourceRequired { get; }
+    int EnergyResourceRequired { get; }
     int RadioactiveMaterialRequired { get; }
 }

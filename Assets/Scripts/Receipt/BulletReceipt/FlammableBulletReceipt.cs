@@ -4,18 +4,18 @@
     {
     }
 
-    public override int MetalMaterialRequired
+    public override int MetalResourceRequired
     {
         get
         {
-            return base.MetalMaterialRequired + 1;
+            return base.MetalResourceRequired + 1;
         }
     }
-    public override int FuelMaterialRequired
+    public override int FlammableResourceRequired
     {
         get
         {
-            return base.FuelMaterialRequired + 2;
+            return base.FlammableResourceRequired + 2;
         }
     }
 

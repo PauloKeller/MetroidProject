@@ -26,7 +26,7 @@ public class MetalBulletReceiptTests
     public void MetalMaterialRequired_ShouldReturnBaseValue()
     {
         // Act
-        int result = metalBulletReceipt.MetalMaterialRequired;
+        int result = metalBulletReceipt.MetalResourceRequired;
 
         // Assert
         Assert.AreEqual(1, result);
@@ -36,7 +36,7 @@ public class MetalBulletReceiptTests
     public void ChemicalMaterialRequired_ShouldReturnBaseValue()
     {
         // Act
-        int result = metalBulletReceipt.ChemicalMaterialRequired;
+        int result = metalBulletReceipt.ChemicalResourceRequired;
 
         // Assert
         Assert.AreEqual(0, result);
@@ -46,7 +46,7 @@ public class MetalBulletReceiptTests
     public void EnergyMaterialRequired_ShouldReturnBaseValue()
     {
         // Act
-        int result = metalBulletReceipt.EnergyMaterialRequired;
+        int result = metalBulletReceipt.EnergyResourceRequired;
 
         // Assert
         Assert.AreEqual(0, result);
@@ -56,7 +56,7 @@ public class MetalBulletReceiptTests
     public void FuelMaterialRequired_ShouldReturnBaseValue()
     {
         // Act
-        int result = metalBulletReceipt.FuelMaterialRequired;
+        int result = metalBulletReceipt.FlammableResourceRequired;
 
         // Assert
         Assert.AreEqual(0, result);

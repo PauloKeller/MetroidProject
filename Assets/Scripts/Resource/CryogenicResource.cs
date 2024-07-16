@@ -1,4 +1,4 @@
-﻿public struct ChemicalResource: IResource
+﻿public class CryogenicResource : IResource
 {
     public float Weight
     {
