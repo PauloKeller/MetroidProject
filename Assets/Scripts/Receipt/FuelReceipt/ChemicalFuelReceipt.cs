@@ -1,4 +1,4 @@
-﻿public class ChemicalFuelReceipt : FuelReceipt
+﻿public class ChemicalFuelReceipt : AmmoReceipt
 {
     public ChemicalFuelReceipt(IAmmoReceipt receipt) : base(receipt)
     {

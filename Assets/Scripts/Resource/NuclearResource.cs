@@ -29,7 +29,7 @@
     {
         get
         {
-            return ResourceType.Radioactive;
+            return ResourceType.Nuclear;
         }
     }
 }

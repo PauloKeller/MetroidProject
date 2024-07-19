@@ -35,6 +35,10 @@ MonoBehaviour:
     m_Key: nuclearMaterialText
     m_Metadata:
       m_Items: []
+  - m_Id: 3263879257812992
+    m_Key: cryogenicResourceText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

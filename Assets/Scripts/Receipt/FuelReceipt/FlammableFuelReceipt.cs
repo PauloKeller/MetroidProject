@@ -1,4 +1,4 @@
-﻿public class FlammableFuelReceipt : FuelReceipt
+﻿public class FlammableFuelReceipt : AmmoReceipt
 {
     public FlammableFuelReceipt(IAmmoReceipt receipt) : base(receipt)
     {

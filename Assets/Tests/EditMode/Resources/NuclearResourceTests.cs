@@ -49,4 +49,14 @@ public class NuclearResourceTests
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);
     }
+
+    [Test]
+    public void Type_ReturnsExpectedValue()
+    {
+        // Act
+        var type = nuclearResource.Type;
+
+        // Assert
+        Assert.AreEqual(ResourceType.Nuclear, type);
+    }
 }

@@ -1,4 +1,4 @@
-﻿public class CryogenicFuelReceipt : FuelReceipt
+﻿public class CryogenicFuelReceipt : AmmoReceipt
 {
     public CryogenicFuelReceipt(IAmmoReceipt receipt) : base(receipt)
     {

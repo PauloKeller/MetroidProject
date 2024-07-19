@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.Localization.Tables;
+using UnityEngine.UI;
 
 public class CraftController : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class CraftController : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI flammableAmountLabel;
     [SerializeField]
+    TextMeshProUGUI cryogenicAmountLabel;
+    [SerializeField]
     TextMeshProUGUI chemicalAmountLabel;
     [SerializeField]
     TextMeshProUGUI energyAmountLabel;
@@ -16,10 +18,12 @@ public class CraftController : MonoBehaviour
     TextMeshProUGUI nuclearAmountLabel;
     [SerializeField]
     TextMeshProUGUI receiptLabel;
+    [SerializeField]
+    Button chemicalFuelButton;
 
     CraftUseCase useCase;
 
-    private BulletReceipt selectedBulletReceipt = new MetalBulletReceipt(new BaseBulletReceipt());
+    private AmmoReceipt selectedReceipt = new MetalBulletReceipt(new BaseBulletReceipt());
     private int amount = 0;
 
     private void Awake()
@@ -27,22 +31,16 @@ public class CraftController : MonoBehaviour
         useCase = new CraftUseCase();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         LoadUIData();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void CraftItem()
     {
         try
         {
-            BulletAmmoStack ammoStack = useCase.CraftBullet(amount: amount, selectedBulletReceipt);
+            BulletAmmoStack ammoStack = useCase.CraftAmmoReceipt(amount: amount, receipt: selectedReceipt);
             string text = $"{ammoStack.amount} of {ammoStack.bullet.GetType()} created";
             UpdateReceiptLabel(text);
         }
@@ -66,20 +64,40 @@ public class CraftController : MonoBehaviour
 
     public void FlameBulletButtonPressed() 
     {
-        selectedBulletReceipt = new FlammableBulletReceipt(new BaseBulletReceipt());
-        UpdateReceiptLabel(selectedBulletReceipt.Name);
+        selectedReceipt = new FlammableBulletReceipt(new MetalBulletReceipt(new BaseBulletReceipt()));
+        UpdateReceiptLabel(selectedReceipt.Name);
     }
 
     public void MetalBulletButtonPressed()
     {
-        selectedBulletReceipt = new MetalBulletReceipt(new BaseBulletReceipt());
-        UpdateReceiptLabel(selectedBulletReceipt.Name);
+        selectedReceipt = new MetalBulletReceipt(new BaseBulletReceipt());
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+
+    public void FlammableFuelButtonPressed()
+    {
+        selectedReceipt = new FlammableFuelReceipt(new BaseFuelReceipt());
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+
+    public void CryogenicFuelButtonPressed()
+    {
+        selectedReceipt = new CryogenicCellReceipt(new FlammableFuelReceipt(new BaseFuelReceipt()));
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+
+    public void ChemicalFuelButtonPressed()
+    {
+        selectedReceipt = new ChemicalFuelReceipt(new CryogenicCellReceipt(new FlammableFuelReceipt(new BaseFuelReceipt())));
+        UpdateReceiptLabel(selectedReceipt.Name);
     }
 
     public void LoadUIData() 
     {
         UpdateResourcesLabels();
-        UpdateReceiptLabel(selectedBulletReceipt.Name);
+        UpdateReceiptLabel(selectedReceipt.Name);
+
+        chemicalFuelButton.onClick.AddListener(ChemicalFuelButtonPressed);
     }
 
     public void AmountTextFieldOnValueChanged(string text) 
@@ -94,10 +112,11 @@ public class CraftController : MonoBehaviour
 
     private void UpdateResourcesLabels()
     {
-        metallicAmountLabel.text = useCase.MetalStack.amount.ToString();
-        flammableAmountLabel.text = useCase.FlammableStack.amount.ToString();
-        chemicalAmountLabel.text = useCase.ChemicalbleStack.amount.ToString();
-        energyAmountLabel.text = useCase.EnergyStack.amount.ToString();
-        nuclearAmountLabel.text = useCase.NuclearStack.amount.ToString();
+        metallicAmountLabel.text = useCase.MetalStack.quantity.ToString();
+        flammableAmountLabel.text = useCase.FlammableStack.quantity.ToString();
+        cryogenicAmountLabel.text = useCase.CryogenicStack.quantity.ToString();
+        chemicalAmountLabel.text = useCase.ChemicalbleStack.quantity.ToString();
+        energyAmountLabel.text = useCase.EnergyStack.quantity.ToString();
+        nuclearAmountLabel.text = useCase.NuclearStack.quantity.ToString();
     }
 }

@@ -38,6 +38,10 @@ MonoBehaviour:
     m_Localized: Nuclear
     m_Metadata:
       m_Items: []
+  - m_Id: 3263879257812992
+    m_Localized: "Criog\xEAnico"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

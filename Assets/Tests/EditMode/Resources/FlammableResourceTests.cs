@@ -49,4 +49,14 @@ public class FlammableResourceTests
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);
     }
+
+    [Test]
+    public void Type_ReturnsExpectedValue()
+    {
+        // Act
+        var type = flammableResource.Type;
+
+        // Assert
+        Assert.AreEqual(ResourceType.Flammable, type);
+    }
 }

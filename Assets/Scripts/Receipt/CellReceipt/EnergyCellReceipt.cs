@@ -1,4 +1,4 @@
-﻿public class EnergyCellReceipt : BulletReceipt
+﻿public class EnergyCellReceipt : AmmoReceipt
 {
     public EnergyCellReceipt(IAmmoReceipt receipt) : base(receipt)
     {

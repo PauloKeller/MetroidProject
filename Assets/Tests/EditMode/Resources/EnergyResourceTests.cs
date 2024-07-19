@@ -49,4 +49,14 @@ public class EnergyResourceTests
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);
     }
+
+    [Test]
+    public void Type_ReturnsExpectedValue()
+    {
+        // Act
+        var type = energyResource.Type;
+
+        // Assert
+        Assert.AreEqual(ResourceType.Energy, type);
+    }
 }

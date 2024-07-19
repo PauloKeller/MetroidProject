@@ -1,38 +1,18 @@
 ﻿public struct ResourceStack
 {
-    public int amount;
+    public int quantity;
     public IResource resource;
 
-    public ResourceStack(ResourceType type, int amount)
+    public ResourceStack(ResourceType type, int quantity)
     {
-        this.amount = amount;
-        switch (type)
-        {
-            case ResourceType.Metal:
-                this.resource = new MetalResource();
-                break;
-            case ResourceType.Chemical:
-                this.resource = new ChemicalResource();
-                break;
-            case ResourceType.Fuel:
-                this.resource = new FlammableResource();
-                break;
-            case ResourceType.Energy:
-                this.resource = new EnergyResource();
-                break;
-            case ResourceType.Radioactive:
-                this.resource = new NuclearResource();
-                break;
-            default:
-                this.resource = new MetalResource();
-                break;
-        }
+        this.quantity = quantity;
+        this.resource = ResourceFactory.GetResource(type);
     }
 
-    public ResourceStack(IResource resource, int amount)
+    public ResourceStack(IResource resource, int quantity)
     {
         this.resource = resource;
-        this.amount = amount;
+        this.quantity = quantity;
     }
 }
 

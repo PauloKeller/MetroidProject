@@ -49,4 +49,14 @@ public class ChemicalResourceTests
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);
     }
+
+    [Test]
+    public void Type_ReturnsExpectedValue()
+    {
+        // Act
+        var type = chemicalResource.Type;
+
+        // Assert
+        Assert.AreEqual(ResourceType.Chemical, type);
+    }
 }

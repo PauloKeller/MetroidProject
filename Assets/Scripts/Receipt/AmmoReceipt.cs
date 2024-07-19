@@ -1,8 +1,8 @@
-﻿public abstract class CellReceipt : IAmmoReceipt
+﻿public abstract class AmmoReceipt : IAmmoReceipt
 {
     protected IAmmoReceipt receipt;
 
-    public CellReceipt(IAmmoReceipt receipt)
+    public AmmoReceipt(IAmmoReceipt receipt)
     {
         this.receipt = receipt;
     }

@@ -28,7 +28,7 @@
     {
         get
         {
-            return ResourceType.Cryogenic;
+            return ResourceType.Chemical;
         }
     }
 }

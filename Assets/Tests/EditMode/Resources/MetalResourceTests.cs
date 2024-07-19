@@ -49,4 +49,14 @@ public class MetalResourceTests
         // Assert
         Assert.AreEqual(expectedDescription, actualDescription);
     }
+
+    [Test]
+    public void Type_ReturnsExpectedValue()
+    {
+        // Act
+        var type = metalResource.Type;
+
+        // Assert
+        Assert.AreEqual(ResourceType.Metal, type);
+    }
 }

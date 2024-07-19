@@ -1,14 +1,15 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System;
+﻿using System.Collections.Generic;
 
 public class CraftUseCase
 {
-    private IRawMaterialRepository rawMaterialRepository = new RawMaterialRepository();
-    private List<ResourceStack> resources = new List<ResourceStack>();
+    private IResourceRepository rawMaterialRepository = new ResourceRepository();
+    private AmmoRepository ammoRepository = new AmmoRepository();
+    private List<ResourceStack> resourceStacks = new List<ResourceStack>();
+    private List<AmmoStack> ammoStacks = new List<AmmoStack>();
     public CraftUseCase()
     {
-        resources = rawMaterialRepository.FindAll();
+        resourceStacks = rawMaterialRepository.FindAll();
+        ammoStacks = ammoRepository.FindAll();
     }
 
     public List<ResourceStack> Resources {
@@ -22,7 +23,7 @@ public class CraftUseCase
     {
         get 
         {
-            return resources.Find(resource => resource.resource is MetalResource);
+            return resourceStacks.Find(resource => resource.resource is MetalResource);
         }
     }
 
@@ -30,7 +31,15 @@ public class CraftUseCase
     {
         get
         {
-            return resources.Find(resource => resource.resource is FlammableResource);
+            return resourceStacks.Find(resource => resource.resource is FlammableResource);
+        }
+    }
+
+    public ResourceStack CryogenicStack
+    {
+        get
+        {
+            return resourceStacks.Find(resource => resource.resource is CryogenicResource);
         }
     }
 
@@ -38,7 +47,7 @@ public class CraftUseCase
     {
         get
         {
-            return resources.Find(resource => resource.resource is ChemicalResource);
+            return resourceStacks.Find(resource => resource.resource is ChemicalResource);
         }
     }
 
@@ -46,7 +55,7 @@ public class CraftUseCase
     {
         get
         {
-            return resources.Find(resource => resource.resource is EnergyResource);
+            return resourceStacks.Find(resource => resource.resource is EnergyResource);
         }
     }
 
@@ -54,13 +63,13 @@ public class CraftUseCase
     {
         get
         {
-            return resources.Find(resource => resource.resource is NuclearResource);
+            return resourceStacks.Find(resource => resource.resource is NuclearResource);
         }
     }
 
-    public BulletAmmoStack CraftBullet(int amount, BulletReceipt receipt)
+    public BulletAmmoStack CraftAmmoReceipt(int amount, AmmoReceipt receipt)
     {
-        resources = rawMaterialRepository.FindAll();
+        resourceStacks = rawMaterialRepository.FindAll();
 
         if (HasEnoughMaterialsAmount(receipt: receipt, amount: amount))
         {
@@ -89,23 +98,23 @@ public class CraftUseCase
 
     private bool HasEnoughMaterialsAmount(IAmmoReceipt receipt, int amount) 
     {
-        if (MetalStack.amount < (receipt.MetalResourceRequired * amount))
+        if (MetalStack.quantity < (receipt.MetalResourceRequired * amount))
         {
             return false;
         }
-        else if (FlammableStack.amount < (receipt.FlammableResourceRequired * amount))
+        else if (FlammableStack.quantity < (receipt.FlammableResourceRequired * amount))
         {
             return false;
         }
-        else if (ChemicalbleStack.amount < (receipt.ChemicalResourceRequired * amount))
+        else if (ChemicalbleStack.quantity < (receipt.ChemicalResourceRequired * amount))
         {
             return false;
         }
-        else if (EnergyStack.amount < (receipt.EnergyResourceRequired * amount))
+        else if (EnergyStack.quantity < (receipt.EnergyResourceRequired * amount))
         {
             return false;
         }
-        else if (NuclearStack.amount < (receipt.RadioactiveMaterialRequired * amount))
+        else if (NuclearStack.quantity < (receipt.RadioactiveMaterialRequired * amount))
         {
             return false;
         }

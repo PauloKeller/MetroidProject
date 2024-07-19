@@ -28,7 +28,7 @@
     {
         get
         {
-            return ResourceType.Fuel;
+            return ResourceType.Flammable;
         }
     }
 }

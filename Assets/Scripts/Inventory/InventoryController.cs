@@ -12,7 +12,7 @@ public class InventoryController : MonoBehaviour
         List<RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
         { 
         };
-        RawMaterialRepository rawMaterialRepository = new RawMaterialRepository();
+        ResourceRepository rawMaterialRepository = new ResourceRepository();
         
 
         UpdateMaterials();

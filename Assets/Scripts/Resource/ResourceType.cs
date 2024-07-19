@@ -1,9 +1,9 @@
 ﻿public enum ResourceType 
 { 
     Metal,
-    Fuel,
+    Flammable,
     Cryogenic,
     Chemical,
     Energy,
-    Radioactive
+    Nuclear
 }

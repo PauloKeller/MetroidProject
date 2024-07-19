@@ -23,13 +23,13 @@ public class RawMaterialInventorySlot
             case ResourceType.Chemical:
                 this.rawMaterial = new ChemicalResource();
                 break;
-            case ResourceType.Fuel:
+            case ResourceType.Flammable:
                 this.rawMaterial = new FlammableResource();
                 break;
             case ResourceType.Energy:
                 this.rawMaterial = new EnergyResource();
                 break;
-            case ResourceType.Radioactive:
+            case ResourceType.Nuclear:
                 this.rawMaterial = new NuclearResource();
                 break;
         }

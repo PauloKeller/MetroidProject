@@ -1,4 +1,4 @@
-﻿public class NuclearCellReceipt : BulletReceipt
+﻿public class NuclearCellReceipt : AmmoReceipt
 {
     public NuclearCellReceipt(IAmmoReceipt receipt) : base(receipt)
     {
