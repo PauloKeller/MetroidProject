@@ -24,11 +24,5 @@
         }
     }
 
-    public ResourceType Type
-    {
-        get
-        {
-            return ResourceType.Flammable;
-        }
-    }
+    public ResourceType Type => ResourceType.Flammable;
 }

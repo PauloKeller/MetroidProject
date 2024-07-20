@@ -1,4 +1,4 @@
-﻿public struct ResourceStack
+﻿public class ResourceStack
 {
     public int quantity;
     public IResource resource;

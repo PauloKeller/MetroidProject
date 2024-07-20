@@ -4,7 +4,7 @@ using System.Data;
 
 public interface IResourceRepository
 {
-    public void Update(int id, int amount);
+    public void Update(int id, int quantity);
     public List<ResourceStack> FindAll();
 }
 

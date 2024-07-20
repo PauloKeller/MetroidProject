@@ -1,10 +1,8 @@
-﻿public interface IAmmoReceipt
+﻿using System.Collections.Generic;
+
+public interface IAmmoReceipt
 {
     string Name { get; }
-    int MetalResourceRequired { get; }
-    int FlammableResourceRequired { get; }
-    int CryogenicResourceRequired { get; }
-    int ChemicalResourceRequired { get; }
-    int EnergyResourceRequired { get; }
-    int RadioactiveMaterialRequired { get; }
+    IDictionary<ResourceType, int> ResourceRequirements { get; }
+    AmmoType AmmoType { get; }
 }

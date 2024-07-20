@@ -1,7 +1,13 @@
 ﻿using Mono.Data.Sqlite;
 using System.Collections.Generic;
 
-public class AmmoRepository
+public interface IAmmoRepository 
+{
+    public void Update(int id, int quantity);
+    public List<AmmoStack> FindAll();
+}
+
+public class AmmoRepository: IAmmoRepository
 {
     private readonly string _connectionString;
 

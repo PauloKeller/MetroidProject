@@ -1,124 +1,75 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
-public class CraftUseCase
+public interface ICraftUseCase 
 {
-    private IResourceRepository rawMaterialRepository = new ResourceRepository();
-    private AmmoRepository ammoRepository = new AmmoRepository();
-    private List<ResourceStack> resourceStacks = new List<ResourceStack>();
-    private List<AmmoStack> ammoStacks = new List<AmmoStack>();
-    public CraftUseCase()
+    public void CraftAmmoReceipt(int amount, IAmmoReceipt receipt);
+}
+
+public class CraftUseCase: ICraftUseCase
+{
+    readonly IResourceRepository resourceRepository;
+    readonly IAmmoRepository ammoRepository;
+    IDictionary<AmmoType, AmmoStack> ammoDictionary;
+    public IDictionary<ResourceType, ResourceStack> ResourceDictionary;
+    public CraftUseCase(IResourceRepository resourceRepository, IAmmoRepository ammoRepository)
     {
-        resourceStacks = rawMaterialRepository.FindAll();
-        ammoStacks = ammoRepository.FindAll();
+        this.resourceRepository = resourceRepository;
+        this.ammoRepository = ammoRepository;
+
+        LoadResources();
     }
 
-    public List<ResourceStack> Resources {
-        get
-        { 
-            return rawMaterialRepository.FindAll();
-        }
+    private void LoadResources()
+    {
+        ResourceDictionary = resourceRepository.FindAll().ToDictionary(resource => (resource.resource).Type, resource => resource);
+        ammoDictionary = ammoRepository.FindAll().ToDictionary(ammo => (ammo.ammo).Type, ammo => ammo);
     }
 
-    public ResourceStack MetalStack 
+    public void CraftAmmoReceipt(int amount, IAmmoReceipt receipt)
     {
-        get 
+        if (!HasEnoughMaterials(receipt, amount))
         {
-            return resourceStacks.Find(resource => resource.resource is MetalResource);
+            throw new CraftMenuException(CraftMenuExceptionCode.NotEnoughMaterials);
         }
+
+        DeductResources(receipt, amount);
+        UpdateAmmo(receipt, amount);
+        LoadResources();
     }
 
-    public ResourceStack FlammableStack
+    private bool HasEnoughMaterials(IAmmoReceipt receipt, int amount)
     {
-        get
-        {
-            return resourceStacks.Find(resource => resource.resource is FlammableResource);
-        }
+        return receipt.ResourceRequirements.All(requirement =>
+            ResourceDictionary.TryGetValue(requirement.Key, out var stack) &&
+            stack.quantity >= requirement.Value * amount);
     }
 
-    public ResourceStack CryogenicStack
+    private void DeductResources(IAmmoReceipt receipt, int amount)
     {
-        get
+        foreach (var entry in receipt.ResourceRequirements)
         {
-            return resourceStacks.Find(resource => resource.resource is CryogenicResource);
-        }
-    }
+            var resourceType = entry.Key;
+            var requiredAmount = entry.Value * amount;
+            var stack = ResourceDictionary[resourceType];
 
-    public ResourceStack ChemicalbleStack
-    {
-        get
-        {
-            return resourceStacks.Find(resource => resource.resource is ChemicalResource);
-        }
-    }
-
-    public ResourceStack EnergyStack
-    {
-        get
-        {
-            return resourceStacks.Find(resource => resource.resource is EnergyResource);
-        }
-    }
-
-    public ResourceStack NuclearStack
-    {
-        get
-        {
-            return resourceStacks.Find(resource => resource.resource is NuclearResource);
+            stack.quantity -= requiredAmount;
+            resourceRepository.Update((int)resourceType, stack.quantity);
         }
     }
 
-    public BulletAmmoStack CraftAmmoReceipt(int amount, AmmoReceipt receipt)
+    private void UpdateAmmo(IAmmoReceipt receipt, int amount)
     {
-        resourceStacks = rawMaterialRepository.FindAll();
-
-        if (HasEnoughMaterialsAmount(receipt: receipt, amount: amount))
+        if (ammoDictionary.TryGetValue(receipt.AmmoType, out var ammoStack))
         {
-            if (receipt is MetalBulletReceipt)
-            {
-                Bullet bullet = new MetalBullet(new BaseBullet());
-                BulletAmmoStack stack = new BulletAmmoStack(bullet: bullet, amount: amount);
-                return stack;
-            }
-            else if (receipt is FlammableBulletReceipt)
-            {
-                FlameBullet bullet = new FlameBullet(new MetalBullet(new BaseBullet()));
-                BulletAmmoStack stack = new BulletAmmoStack(bullet: bullet, amount: amount);
-                return stack;
-            }
-            else 
-            {
-                throw new CraftMenuException(code: CraftMenuExceptionCode.NotAbleToCraftReceipt);
-            }
+            ammoStack.quantity += amount;
+            ammoRepository.Update((int)receipt.AmmoType, ammoStack.quantity);
         }
-        else 
+        else
         {
-            throw new CraftMenuException(code: CraftMenuExceptionCode.NotEnoughMaterials);
+            var newAmmoStack = new AmmoStack(receipt.AmmoType, amount);
+            ammoDictionary[receipt.AmmoType] = newAmmoStack;
+            ammoRepository.Update((int)receipt.AmmoType, newAmmoStack.quantity);
         }
-    }
-
-    private bool HasEnoughMaterialsAmount(IAmmoReceipt receipt, int amount) 
-    {
-        if (MetalStack.quantity < (receipt.MetalResourceRequired * amount))
-        {
-            return false;
-        }
-        else if (FlammableStack.quantity < (receipt.FlammableResourceRequired * amount))
-        {
-            return false;
-        }
-        else if (ChemicalbleStack.quantity < (receipt.ChemicalResourceRequired * amount))
-        {
-            return false;
-        }
-        else if (EnergyStack.quantity < (receipt.EnergyResourceRequired * amount))
-        {
-            return false;
-        }
-        else if (NuclearStack.quantity < (receipt.RadioactiveMaterialRequired * amount))
-        {
-            return false;
-        }
-
-        return true;
     }
 }

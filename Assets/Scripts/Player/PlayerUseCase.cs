@@ -19,24 +19,7 @@ public class PlayerUseCase : IPlayerUseCaseInterface
 
     private Bullet[] machineGunProjectiles = {
         new MetalBullet(new BaseBullet()),
-        new FlameBullet(new MetalBullet(new BaseBullet())),
-    };
-
-    private IProjectile[] flamethrowerProjectiles = {
-        new FuelTank(),
-        new NitrogenTank(new FuelTank()),
-        new ChemicalTank(new FuelTank()),
-    };
-
-    private IProjectile[] laserProjectiles = {
-        new EnergyCell(),
-        new IceCell(new EnergyCell()),
-        new NuclearCell(new EnergyCell()),
-    };
-
-    private IProjectile[] cannonProjectiles = {
-        new NuclearShell(),
-        new EMPShell(new NuclearShell()),
+        new FlammableBullet(new MetalBullet(new BaseBullet())),
     };
 
     // TODO: Should be moved to the player model
@@ -91,39 +74,21 @@ public class PlayerUseCase : IPlayerUseCaseInterface
 
     private IProjectile GetFlamethrowerAmmunition(ProjectileType projectileType)
     {
-        foreach (var item in flamethrowerProjectiles)
-        {
-            if (item.ProjectileType == projectileType)
-            {
-                return item;
-            }
-        }
+
 
         return null;
     }
 
     private IProjectile GetLaserAmmunition(ProjectileType projectileType)
     {
-        foreach (var item in laserProjectiles)
-        {
-            if (item.ProjectileType == projectileType)
-            {
-                return item;
-            }
-        }
+
 
         return null;
     }
 
     private IProjectile GetCannonAmmunition(ProjectileType projectileType)
     {
-        foreach (var item in cannonProjectiles)
-        {
-            if (item.ProjectileType == projectileType)
-            {
-                return item;
-            }
-        }
+
 
         return null;
     }
@@ -136,28 +101,28 @@ public class PlayerUseCase : IPlayerUseCaseInterface
                 if (GetMachineGunAmmunition(bullet: new MetalBullet(new BaseBullet())) is var mgAmmo && mgAmmo != null)
                 {
                     Debug.Log($"Changed ammo {mgAmmo}");
-                    //this.EquipedWeapon.CurrentProjectile = mgAmmo;
+                    
                 }
                 break;
             case WeaponType.Flamethrower:
                 if (GetFlamethrowerAmmunition(projectileType: projectileType) is var flameAmmo && flameAmmo != null)
                 {
                     Debug.Log($"Changed ammo {flameAmmo}");
-                    this.EquipedWeapon.CurrentProjectile = flameAmmo;
+                    
                 }
                 break;
             case WeaponType.Laser:
                 if (GetLaserAmmunition(projectileType: projectileType) is var laserAmmo && laserAmmo != null)
                 {
                     Debug.Log($"Changed ammo {laserAmmo}");
-                    this.EquipedWeapon.CurrentProjectile = laserAmmo;
+                    
                 }
                 break;
             case WeaponType.Cannon:
                 if (GetCannonAmmunition(projectileType: projectileType) is var cannonAmmo && cannonAmmo != null)
                 {
                     Debug.Log($"Changed ammo {cannonAmmo}");
-                    this.EquipedWeapon.CurrentProjectile = cannonAmmo;
+                    
                 }
                 break;
         }

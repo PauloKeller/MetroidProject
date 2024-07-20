@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using PlasticGui;
 
 public class CraftController : MonoBehaviour
 {
@@ -20,28 +21,42 @@ public class CraftController : MonoBehaviour
     TextMeshProUGUI receiptLabel;
     [SerializeField]
     Button chemicalFuelButton;
+    [SerializeField]
+    Button energyCellButton;
+    [SerializeField]
+    Button cryogenicCellButton;
+    [SerializeField]
+    Button nuclearCellButton;
+    [SerializeField]
+    Button nuclearMissileButton;
+    [SerializeField]
+    Button energyMissileButton;
+
 
     CraftUseCase useCase;
 
-    private AmmoReceipt selectedReceipt = new MetalBulletReceipt(new BaseBulletReceipt());
+    private AmmoReceipt selectedReceipt = new MetalBulletReceipt(new BaseAmmoReceipt());
     private int amount = 0;
 
     private void Awake()
     {
-        useCase = new CraftUseCase();
+        useCase = new CraftUseCase(resourceRepository: new ResourceRepository(), ammoRepository: new AmmoRepository());
     }
 
     void Start()
     {
         LoadUIData();
+        SetupUI();
     }
 
     public void CraftItem()
     {
         try
         {
-            BulletAmmoStack ammoStack = useCase.CraftAmmoReceipt(amount: amount, receipt: selectedReceipt);
-            string text = $"{ammoStack.amount} of {ammoStack.bullet.GetType()} created";
+            useCase.CraftAmmoReceipt(amount: amount, receipt: selectedReceipt);
+            string text = $"{amount} of {selectedReceipt.Name} created";
+
+            UpdateResourcesLabels();
             UpdateReceiptLabel(text);
         }
         catch (CraftMenuException error)
@@ -64,40 +79,72 @@ public class CraftController : MonoBehaviour
 
     public void FlameBulletButtonPressed() 
     {
-        selectedReceipt = new FlammableBulletReceipt(new MetalBulletReceipt(new BaseBulletReceipt()));
+        selectedReceipt = new FlammableBulletReceipt(new MetalBulletReceipt(new BaseAmmoReceipt()));
         UpdateReceiptLabel(selectedReceipt.Name);
     }
 
     public void MetalBulletButtonPressed()
     {
-        selectedReceipt = new MetalBulletReceipt(new BaseBulletReceipt());
+        selectedReceipt = new MetalBulletReceipt(new BaseAmmoReceipt());
         UpdateReceiptLabel(selectedReceipt.Name);
     }
 
     public void FlammableFuelButtonPressed()
     {
-        selectedReceipt = new FlammableFuelReceipt(new BaseFuelReceipt());
+        selectedReceipt = new FlammableFuelReceipt(new BaseAmmoReceipt());
         UpdateReceiptLabel(selectedReceipt.Name);
     }
 
     public void CryogenicFuelButtonPressed()
     {
-        selectedReceipt = new CryogenicCellReceipt(new FlammableFuelReceipt(new BaseFuelReceipt()));
+        selectedReceipt = new CryogenicFuelReceipt(new FlammableFuelReceipt(new BaseAmmoReceipt()));
         UpdateReceiptLabel(selectedReceipt.Name);
     }
-
     public void ChemicalFuelButtonPressed()
     {
-        selectedReceipt = new ChemicalFuelReceipt(new CryogenicCellReceipt(new FlammableFuelReceipt(new BaseFuelReceipt())));
+        selectedReceipt = new ChemicalFuelReceipt(new CryogenicFuelReceipt(new FlammableFuelReceipt(new BaseAmmoReceipt())));
         UpdateReceiptLabel(selectedReceipt.Name);
     }
-
+    public void EnergyCellButtonPressed()
+    {
+        selectedReceipt = new EnergyCellReceipt(new BaseAmmoReceipt());
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+    public void CryogenicCellButtonPressed()
+    {
+        selectedReceipt = new CryogenicCellReceipt(new EnergyCellReceipt(new BaseAmmoReceipt()));
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+    public void NuclearCellButtonPressed()
+    {
+        selectedReceipt = new NuclearCellReceipt(new CryogenicCellReceipt(new EnergyCellReceipt(new BaseAmmoReceipt())));
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+    public void NuclearMissileButtonPressed()
+    {
+        selectedReceipt = new NuclearMissileReceipt(new BaseAmmoReceipt());
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
+    public void EnergyMissileButtonPressed()
+    {
+        selectedReceipt = new EnergyMissileReceipt(new NuclearMissileReceipt(new BaseAmmoReceipt()));
+        UpdateReceiptLabel(selectedReceipt.Name);
+    }
     public void LoadUIData() 
     {
         UpdateResourcesLabels();
-        UpdateReceiptLabel(selectedReceipt.Name);
+        UpdateReceiptLabel(selectedReceipt.Name);  
+    }
 
+    private void SetupUI()
+    {
         chemicalFuelButton.onClick.AddListener(ChemicalFuelButtonPressed);
+        energyCellButton.onClick.AddListener(EnergyCellButtonPressed);
+        cryogenicCellButton.onClick.AddListener(CryogenicCellButtonPressed);
+        nuclearCellButton.onClick.AddListener(NuclearCellButtonPressed);
+        nuclearMissileButton.onClick.AddListener(NuclearMissileButtonPressed);
+        energyMissileButton.onClick.AddListener(EnergyMissileButtonPressed);
+
     }
 
     public void AmountTextFieldOnValueChanged(string text) 
@@ -112,11 +159,34 @@ public class CraftController : MonoBehaviour
 
     private void UpdateResourcesLabels()
     {
-        metallicAmountLabel.text = useCase.MetalStack.quantity.ToString();
-        flammableAmountLabel.text = useCase.FlammableStack.quantity.ToString();
-        cryogenicAmountLabel.text = useCase.CryogenicStack.quantity.ToString();
-        chemicalAmountLabel.text = useCase.ChemicalbleStack.quantity.ToString();
-        energyAmountLabel.text = useCase.EnergyStack.quantity.ToString();
-        nuclearAmountLabel.text = useCase.NuclearStack.quantity.ToString();
+        if (useCase.ResourceDictionary.ContainsKey(ResourceType.Metal)) 
+        {
+            metallicAmountLabel.text = useCase.ResourceDictionary[ResourceType.Metal].quantity.ToString();
+        }
+
+        if (useCase.ResourceDictionary.ContainsKey(ResourceType.Flammable))
+        {
+            flammableAmountLabel.text = useCase.ResourceDictionary[ResourceType.Flammable].quantity.ToString();
+        }
+
+        if (useCase.ResourceDictionary.ContainsKey(ResourceType.Cryogenic))
+        {
+            cryogenicAmountLabel.text = useCase.ResourceDictionary[ResourceType.Cryogenic].quantity.ToString();
+        }
+
+        if (useCase.ResourceDictionary.ContainsKey(ResourceType.Chemical))
+        {
+            chemicalAmountLabel.text = useCase.ResourceDictionary[ResourceType.Chemical].quantity.ToString();
+        }
+
+        if (useCase.ResourceDictionary.ContainsKey(ResourceType.Energy))
+        {
+            energyAmountLabel.text = useCase.ResourceDictionary[ResourceType.Energy].quantity.ToString();
+        }
+
+        if (useCase.ResourceDictionary.ContainsKey(ResourceType.Nuclear))
+        {
+            nuclearAmountLabel.text = useCase.ResourceDictionary[ResourceType.Nuclear].quantity.ToString();
+        }
     }
 }

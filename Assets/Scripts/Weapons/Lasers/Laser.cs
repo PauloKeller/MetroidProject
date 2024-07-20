@@ -1,10 +1,8 @@
 ﻿public class Laser : IWeapon
 {
-    private IProjectile currentAmmunition;
 
     public Laser()
     {
-        this.currentAmmunition = new EnergyCell();
     }
 
     public float Weight 
@@ -30,20 +28,9 @@
     }
     public WeaponType WeaponType
     {
-        get 
-        {
-            return WeaponType.Laser;
-        }
-    }
-    public IProjectile CurrentProjectile
-    {
         get
         {
-            return currentAmmunition;
-        }
-        set
-        {
-            this.currentAmmunition = value;
+            return WeaponType.Laser;
         }
     }
     public float MaxRange

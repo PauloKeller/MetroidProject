@@ -4,7 +4,7 @@
 
     public Flamethrower()
     {
-        this.currentAmmunition = new FuelTank();
+        
     }
     public float Weight 
     {

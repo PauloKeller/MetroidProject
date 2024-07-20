@@ -58,6 +58,4 @@ public class MachineGun : IWeapon
             return 15f;
         }
     }
-
-    IProjectile IWeapon.CurrentProjectile { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 }
