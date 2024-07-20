@@ -1,10 +1,10 @@
 public class MachineGun : IWeapon
 {
-    private IProjectile currentAmmunition;
+    private Bullet currentAmmunition;
 
     public MachineGun() 
     {
-        this.currentAmmunition = new Bullet();
+        this.currentAmmunition = new MetalBullet(new BaseBullet());
     }
 
     public float Weight
@@ -39,7 +39,7 @@ public class MachineGun : IWeapon
         }
     }
 
-    public IProjectile CurrentProjectile
+    public Bullet CurrentProjectile
     {
         get 
         {

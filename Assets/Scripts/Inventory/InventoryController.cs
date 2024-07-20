@@ -1,27 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
+// TODO: Should handle only the visualization of character stuff
 public class InventoryController : MonoBehaviour
 {
     private IInventoryUseCase useCase;
 
     private void Awake()
     {
-        RawMaterialInventorySlot metalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new MetalRawMaterial(), quantity: 100);
-        RawMaterialInventorySlot fuelInventorySlot = new RawMaterialInventorySlot(rawMaterial: new FuelRawMaterial(), quantity: 50);
-        RawMaterialInventorySlot energyInventorySlot = new RawMaterialInventorySlot(rawMaterial: new EnergyRawMaterial(), quantity: 50);
-        RawMaterialInventorySlot chemicalInventorySlot = new RawMaterialInventorySlot(rawMaterial: new ChemicalRawMaterial(), quantity: 50);
-        RawMaterialInventorySlot radioactiveInventorySlot = new RawMaterialInventorySlot(rawMaterial: new RadioactiveRawMaterial(), quantity: 50);
+        List<RawMaterialInventorySlot> rawMaterialSlots = new List<RawMaterialInventorySlot>
+        { 
+        };
+        ResourceRepository rawMaterialRepository = new ResourceRepository();
+        
 
-        Inventory inventory = new Inventory(metalInventorySlot: metalInventorySlot, 
-            fuelInventorySlot: fuelInventorySlot, 
-            energyInventorySlot: energyInventorySlot,
-            chemicalInventorySlot: chemicalInventorySlot,
-            radioactiveInventorySlot: radioactiveInventorySlot);
-        this.useCase = new InventoryUseCase(inventory: inventory);
+        UpdateMaterials();
+    }
+
+    public void UpdateMaterials() 
+    {
     }
 
     public void OnPutMaterial()
     {
-        useCase.UpdateRawMaterialQuantity(new EnergyRawMaterial(), 20);
     }
 }

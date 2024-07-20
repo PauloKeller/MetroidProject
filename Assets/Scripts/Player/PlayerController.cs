@@ -147,12 +147,12 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             GameObject prefab = Instantiate(projectilePrefab, gameObject.transform.position, Quaternion.identity);
-            IProjectile projectile = playerUseCase.EquipedWeapon.CurrentProjectile;
+           
             IWeapon weapon = playerUseCase.EquipedWeapon;
 
             prefab.GetComponent<ProjectileController>().BuldProjectile(
                 facingDirection: playerUseCase.FacingDir, 
-                projectile: projectile, maxTravelDistance: weapon.MaxRange);
+                projectile: null, maxTravelDistance: weapon.MaxRange);
         }
     } 
 

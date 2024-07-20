@@ -7,7 +7,6 @@ public interface IWeapon
     ///  The MaxRange set the Projectile MaxTravelDistance 
     float MaxRange { get;  }
     WeaponType WeaponType { get; }
-    IProjectile CurrentProjectile { get; set; }
 }
 
 public abstract class Weapon : IWeapon
@@ -49,19 +48,6 @@ public abstract class Weapon : IWeapon
         get 
         {
             return weapon.WeaponType;
-        }
-    }
-
-    public virtual IProjectile CurrentProjectile 
-    {
-        get 
-        {
-            return weapon.CurrentProjectile;
-        }
-
-        set 
-        {
-            weapon.CurrentProjectile = value;
         }
     }
 

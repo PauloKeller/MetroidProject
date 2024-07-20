@@ -24,6 +24,13 @@ MonoBehaviour:
     - Locale-pt
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8663131f255f1240bd259dc302bcb40
+    m_Address: CraftMenuScene_pt
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pt
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: a437244f7df8f4f438a11f012d0c6ccd, type: 2}
   m_SchemaSet:

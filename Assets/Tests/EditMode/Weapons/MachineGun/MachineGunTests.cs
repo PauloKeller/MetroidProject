@@ -21,7 +21,7 @@ class MachineGunTests
 
         Assert.AreEqual(10, sut.CurrentProjectile.Damage);
 
-        sut.CurrentProjectile = new FlameBullet(new Bullet());
+        sut.CurrentProjectile = new FlammableBullet(new BaseBullet());
 
         Assert.AreEqual(20, sut.CurrentProjectile.Damage);
     }

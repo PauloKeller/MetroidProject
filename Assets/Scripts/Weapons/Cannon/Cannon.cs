@@ -1,10 +1,10 @@
 ﻿public class Cannon : IWeapon
 {
-    private IProjectile currentAmmunition;
+    private Missile currentAmmunition;
 
     public Cannon()
     {
-        this.currentAmmunition = new NuclearShell();
+        this.currentAmmunition = new NuclearMissile(new BaseMissile());
     }
 
     public float Weight
@@ -36,18 +36,6 @@
         get
         {
             return WeaponType.Cannon;
-        }
-    }
-
-    public IProjectile CurrentProjectile
-    {
-        get
-        {
-            return currentAmmunition;
-        }
-        set
-        {
-            this.currentAmmunition = value;
         }
     }
 
